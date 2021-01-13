@@ -4,12 +4,16 @@ public class Date {
 	private int date, month, year;
 	
 	public Date(int date, int month, int year) {
-		super();
+//		super();
 		this.date = date;
 		this.month = month;
 		this.year = year;
 	}
 
+	public Date() {
+		
+	}
+	
 	public int getDate() {
 		return date;
 	}
@@ -33,5 +37,12 @@ public class Date {
 	public void setYear(int year) {
 		this.year = year;
 	}
+
+	@Override
+	public String toString() {
+		return date + "/"+ month + "/" + year ;
+	}
+	
+	
 	
 }

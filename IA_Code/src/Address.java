@@ -8,7 +8,11 @@ public class Address {
 		return line1;
 	}
 	public void setLine1(String line1) {
-		this.line1 = line1;
+		if(line1 != null) {
+			this.line1 = line1;
+		} else {
+			this.line1 = "";
+		}
 	}
 	public String getLine2() {
 		return line2;

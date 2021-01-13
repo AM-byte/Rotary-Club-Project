@@ -6,10 +6,11 @@ import java.math.*;
 public class Home_Menu {
 
 	static ArrayList<Beneficiary_Data> benList = new ArrayList<Beneficiary_Data>();
+	static ArrayList<Beneficiary_Data> sortedBenList = new ArrayList<Beneficiary_Data>();
 	static Scanner in = new Scanner(System.in);
 
 	public static void main(String[] args) {
-
+		
 		homeMenu();
 
 	}
@@ -89,6 +90,8 @@ public class Home_Menu {
 
 			case 2:
 				// editing/deleting ben data
+				Search_Screen s = new Search_Screen();
+				s.setVisible(true);
 				editData();
 				break;
 
@@ -113,14 +116,16 @@ public class Home_Menu {
 
 	}
 
-	public static void editData() {
+	public static void editData() { // write to file (file writer) method
 		try {
 			File benData = new File("/Users/arnavmahale/Documents/CS IA/files/benData.csv");
 			FileWriter fw = new FileWriter(benData);
 			BufferedWriter bw = new BufferedWriter(fw);
 			for (int i = 0; i < benList.size(); i++) {
 				System.out.println("For loop");
-
+//				Search_Screen s = new Search_Screen();
+//				s.setVisible(true);
+				
 //				bw.write(benList.get(i).getFirstName() + "," + benList.get(i).getLastName() + "," + benList.get(i).getID());
 				bw.newLine();
 				bw.flush();
@@ -133,14 +138,16 @@ public class Home_Menu {
 		}
 	}
 
-	public static void addData() {
+	public static void addData() { // append to file (file writer) method
 		try {
 			File benData = new File("/Users/arnavmahale/Documents/CS IA/files/benData.csv");
 			FileWriter fw = new FileWriter(benData, true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			for (int i = 0; i < benList.size(); i++) {
 				System.out.println("For loop");
-
+//				Data_Entry_Screen n = new Data_Entry_Screen();
+//				n.setVisible(true);
+				
 //				bw.write(benList.get(i).getFirstName() + "," + benList.get(i).getLastName() + "," + benList.get(i).getID());
 				bw.newLine();
 				bw.flush();
@@ -153,7 +160,7 @@ public class Home_Menu {
 		}
 	}
 
-	public static void readData() {
+	public static void readData() { // file reading method
 		File f = new File("/Users/arnavmahale/Documents/CS IA/files/benData.csv");
 		String s = "";
 		try {
@@ -164,7 +171,9 @@ public class Home_Menu {
 			while ((s = buffer.readLine()) != null) {
 				Beneficiary_Data b = new Beneficiary_Data();
 				Address a = new Address();
-				
+				Contact c = new Contact();
+				Hand h = new Hand();
+
 				b.setID(Integer.parseInt(s.split(",")[0]));
 				b.setBadgeNum(s.split(",")[1]);
 				b.setFirstName(s.split(",")[2]);
@@ -175,14 +184,38 @@ public class Home_Menu {
 				b.setDob(new Date(Integer.parseInt(dob.split("/")[0]), Integer.parseInt(dob.split("/")[1]), Integer.parseInt(dob.split("/")[2])));
 				a.setLine1(s.split("'")[7]);
 				a.setLine2(s.split("'")[8]);
-				a.city
+				a.setCity(s.split("'")[9]);
+				a.setPost(s.split(",")[10]);
+				a.setTaluka(s.split(",")[11]);
+				a.setPost(s.split(",")[12]);
+				a.setState(s.split(",")[13]);
+				a.setPinCode(Integer.parseInt(s.split(",")[14]));
+				c.setPhoneNum1(Integer.parseInt(s.split(",")[15]));
+				c.setPhoneNum2(Integer.parseInt(s.split(",")[16]));
+				c.setEmail(s.split(",")[17]);
+				b.setOccupation(s.split(",")[18]);
+				h.setLOREI(Double.parseDouble(s.split(",")[19]));
+				h.setLostHand(s.split(",")[20]);
+				h.setLossYear(Integer.parseInt(s.split(",")[21]));
+				h.setCauseOfLoss(s.split(",")[22]);
+				h.setOther(s.split(",")[23]);
+				b.setCampInfo(s.split(",")[24]);
 				
+				Home_Menu.benList.add(b);
 			}
 
 		} catch (Exception e) {
 			System.out.println(e);
 			;
 		}
+	}
+	
+	private void quickSort() { // sorting the benList array
+		
+	}
+	
+	private void partition() { // partitioning the list at the right place to be sorted
+		
 	}
 
 }

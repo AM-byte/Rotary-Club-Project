@@ -9,6 +9,13 @@ public class Beneficiary_Data {
 	private Contact contact;
 	private Hand hand;
 
+	public Beneficiary_Data() {
+		address = new Address();
+		contact = new Contact();
+		dob = new Date();
+		hand = new Hand();
+	}
+	
 	public void personalDetails(int id, String bn, String fn, String ln, String on, char s, String o, String ci) {
 		this.ID = id;
 		this.badgeNum = bn;
@@ -50,7 +57,7 @@ public class Beneficiary_Data {
 	public void checkUp(double l, String lh, String col, String other, int ly) {
 		hand.setLOREI(l);
 		hand.setLostHand(lh);
-		hand.setCouseOfLoss(col);
+		hand.setCauseOfLoss(col);
 		hand.setOther(other);
 		hand.setLossYear(ly);
 

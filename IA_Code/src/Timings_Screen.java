@@ -128,12 +128,12 @@ public class Timings_Screen extends JFrame {
 		contentPane.add(photoOUTtextField);
 		photoOUTtextField.setColumns(10);
 		
-		JButton findbtnNewButton = new JButton("Find Record");
-		findbtnNewButton.setBounds(6, 474, 117, 29);
+		JButton findbtnNewButton = new JButton("Search Record");
+		findbtnNewButton.setBounds(19, 474, 117, 29);
 		contentPane.add(findbtnNewButton);
 		
 		JButton savebtnNewButton = new JButton("Save Record");
-		savebtnNewButton.setBounds(135, 474, 117, 29);
+		savebtnNewButton.setBounds(149, 474, 117, 29);
 		contentPane.add(savebtnNewButton);
 	}
 

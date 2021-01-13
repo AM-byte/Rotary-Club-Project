@@ -2,7 +2,7 @@
 public class Hand {
 	// declaring all required variables
 	private double LOREI;
-	private String lostHand, couseOfLoss, other;
+	private String lostHand, causeOfLoss, other;
 	private int lossYear;
 	
 	public double getLOREI() {
@@ -17,11 +17,11 @@ public class Hand {
 	public void setLostHand(String lostHand) {
 		this.lostHand = lostHand;
 	}
-	public String getCouseOfLoss() {
-		return couseOfLoss;
+	public String getCauseOfLoss() {
+		return causeOfLoss;
 	}
-	public void setCouseOfLoss(String couseOfLoss) {
-		this.couseOfLoss = couseOfLoss;
+	public void setCauseOfLoss(String couseOfLoss) {
+		this.causeOfLoss = couseOfLoss;
 	}
 	public String getOther() {
 		return other;

@@ -24,6 +24,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Data_Entry_Screen extends JFrame {
 
@@ -100,6 +102,39 @@ public class Data_Entry_Screen extends JFrame {
 	public Data_Entry_Screen() {
 		initComponents();
 	}
+	
+	public Data_Entry_Screen(int index) {
+		initComponents();
+		
+		Beneficiary_Data b = Home_Menu.benList.get(index);
+		
+		IDtextfield.setText(b.getID() + "");
+		badgeNumtextField.setText(b.getBadgeNum());
+		firstNametextField.setText(b.getFirstName());
+		lastNametextField.setText(b.getLastName());
+		otherNametextField.setText(b.getOtherName());
+		sexcomboBox.setSelectedItem(b.getSex());
+		dobtextField.setText(b.getDob().toString());
+		address1textArea.setText(b.getAddress().getLine1());
+		address2textArea.setText(b.getAddress().getLine2());
+		citytextField.setText(b.getAddress().getCity());
+		posttextField.setText(b.getAddress().getPost());
+		talukatextField.setText(b.getAddress().getTaluka());
+		districttextField.setText(b.getAddress().getDistrict());
+		statecomboBox.setSelectedItem(b.getAddress().getState());
+		pinCodetextField.setText(b.getAddress().getPinCode() + "");
+		phoneNum1textField.setText(b.getContact().getPhoneNum1() + "");
+		phoneNum2textField.setText(b.getContact().getPhoneNum2() + "");
+		emailtextField.setText(b.getContact().getEmail());
+		occupationcomboBox.setSelectedItem(b.getOccupation());
+		LOREItextField.setText(b.getHand().getLOREI() + "");
+		lostHandcomboBox.setSelectedItem(b.getHand().getLostHand());
+		yearOfLosstextField.setText(b.getHand().getLossYear() + "");
+		causeOfLosscomboBox.setSelectedItem(b.getHand().getCauseOfLoss());
+		othertextField.setText(b.getHand().getOther());
+		infocomboBox.setSelectedItem(b.getCampInfo());
+		
+	}
 
 	private void btnSavePrintActionPerformed() { // actions performed after the Save n Print button is pressed
 
@@ -123,23 +158,27 @@ public class Data_Entry_Screen extends JFrame {
 		phoneNum2 = Integer.parseInt(phoneNum2textField.getText());
 		email = emailtextField.getText();
 		occupation = occupationcomboBox.getSelectedItem().toString();
-		LOREI = Integer.parseInt(LOREItextField.getText());
+		LOREI = Double.parseDouble((LOREItextField.getText()));
 		lostHand = lostHandcomboBox.getSelectedItem().toString();
 		lossYear = Integer.parseInt(yearOfLosstextField.getText());
 		causeOfLoss = causeOfLosscomboBox.getSelectedItem().toString();
 		other = othertextField.getText();
 		campInfo = infocomboBox.getSelectedItem().toString();
 
-		// 
+		// adding all the variables to their respective constructors and then adding the one beneficiary to the benList Array List
 		boolean valid =true;
 		if(valid) {
-		Beneficiary_Data b = new Beneficiary_Data();
-		b.personalDetails(ID, badgeNum, firstName, lastName, otherName, sex, occupation, campInfo);
-		b.address(line1, line2, city, post, taluka, district, state, pinCode); // error
-		b.checkUp(LOREI, lostHand, causeOfLoss, other, lossYear);
-		b.date(Integer.parseInt(dob.split("/")[0]), Integer.parseInt(dob.split("/")[1]), Integer.parseInt(dob.split("/")[2]));
-
-		Home_Menu.benList.add(b);
+			Beneficiary_Data b = new Beneficiary_Data();
+			b.personalDetails(ID, badgeNum, firstName, lastName, otherName, sex, occupation, campInfo);
+			b.address(line1, line2, city, post, taluka, district, state, pinCode); // error
+			b.checkUp(LOREI, lostHand, causeOfLoss, other, lossYear);
+			b.date(Integer.parseInt(dob.split("/")[0]), Integer.parseInt(dob.split("/")[1]), Integer.parseInt(dob.split("/")[2]));
+			Home_Menu.benList.add(b);
+			System.out.println("Values added");
+			for (int i = 0; i < Home_Menu.benList.size(); i++) {
+				System.out.println(Home_Menu.benList.get(i).getID());
+			}
+		
 		}
 		else {
 			JOptionPane.showMessageDialog(rootPane, "invalid data");
@@ -351,11 +390,7 @@ public class Data_Entry_Screen extends JFrame {
 
 			}
 		});
-//		dobtextField.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				dobtextFieldActionPerformed();
-//			}
-//		});
+//		
 		dobtextField.setText("dd/mm/yyyy");
 		dobtextField.setBounds(125, 215, 130, 26);
 		dobtextField.setColumns(10);
