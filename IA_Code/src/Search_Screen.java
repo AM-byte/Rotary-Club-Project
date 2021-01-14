@@ -48,7 +48,7 @@ public class Search_Screen extends JFrame {
 			JOptionPane.showMessageDialog(rootPane, e);
 		}
 		
-		public void binarySearch(ArrayList<Beneficiary_Data> benList, ID) {
+//		public void binarySearch(ArrayList<Beneficiary_Data> benList, ID) {
 			int index = -1;
 			int low = 0;
 			int high = Home_Menu.benList.size()-1;
@@ -72,7 +72,7 @@ public class Search_Screen extends JFrame {
 		}
 		
 		
-	}
+//	
 	
 	public Search_Screen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

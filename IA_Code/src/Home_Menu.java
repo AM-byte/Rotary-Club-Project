@@ -170,9 +170,9 @@ public class Home_Menu {
 
 			while ((s = buffer.readLine()) != null) {
 				Beneficiary_Data b = new Beneficiary_Data();
-				Address a = new Address();
-				Contact c = new Contact();
-				Hand h = new Hand();
+//				Address a = new Address();
+//				Contact c = new Contact();
+//				Hand h = new Hand();
 
 				b.setID(Integer.parseInt(s.split(",")[0]));
 				b.setBadgeNum(s.split(",")[1]);
@@ -181,25 +181,24 @@ public class Home_Menu {
 				b.setOtherName(s.split(",")[4]);
 				b.setSex(s.split(",")[5].charAt(0));
 				String dob = s.split(",")[6];
-				b.setDob(new Date(Integer.parseInt(dob.split("/")[0]), Integer.parseInt(dob.split("/")[1]),
-						Integer.parseInt(dob.split("/")[2])));
-				a.setLine1(s.split("'")[7]);
-				a.setLine2(s.split("'")[8]);
-				a.setCity(s.split("'")[9]);
-				a.setPost(s.split(",")[10]);
-				a.setTaluka(s.split(",")[11]);
-				a.setPost(s.split(",")[12]);
-				a.setState(s.split(",")[13]);
-				a.setPinCode(Integer.parseInt(s.split(",")[14]));
-				c.setPhoneNum1(Integer.parseInt(s.split(",")[15]));
-				c.setPhoneNum2(Integer.parseInt(s.split(",")[16]));
-				c.setEmail(s.split(",")[17]);
+				b.setDob(new Date(Integer.parseInt(dob.split("/")[0]), Integer.parseInt(dob.split("/")[1]), Integer.parseInt(dob.split("/")[2])));
+//				a.setLine1(s.split("'")[7]);
+//				a.setLine2(s.split("'")[8]);
+//				a.setCity(s.split("'")[9]);
+//				a.setPost(s.split(",")[10]);
+//				a.setTaluka(s.split(",")[11]);
+//				a.setPost(s.split(",")[12]);
+//				a.setState(s.split(",")[13]);
+//				a.setPinCode(Integer.parseInt(s.split(",")[14]));
+//				c.setPhoneNum1(Integer.parseInt(s.split(",")[15]));
+//				c.setPhoneNum2(Integer.parseInt(s.split(",")[16]));
+//				c.setEmail(s.split(",")[17]);
 				b.setOccupation(s.split(",")[18]);
-				h.setLOREI(Double.parseDouble(s.split(",")[19]));
-				h.setLostHand(s.split(",")[20]);
-				h.setLossYear(Integer.parseInt(s.split(",")[21]));
-				h.setCauseOfLoss(s.split(",")[22]);
-				h.setOther(s.split(",")[23]);
+//				h.setLOREI(Double.parseDouble(s.split(",")[19]));
+//				h.setLostHand(s.split(",")[20]);
+//				h.setLossYear(Integer.parseInt(s.split(",")[21]));
+//				h.setCauseOfLoss(s.split(",")[22]);
+//				h.setOther(s.split(",")[23]);
 				b.setCampInfo(s.split(",")[24]);
 
 				Home_Menu.benList.add(b);
