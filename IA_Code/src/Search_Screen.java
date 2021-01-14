@@ -42,32 +42,35 @@ public class Search_Screen extends JFrame {
 		int ID = 0;
 		try {
 			 ID = Integer.parseInt(IDtextField.getText());
+			 
 		}
 		catch(Exception e) {
 			JOptionPane.showMessageDialog(rootPane, e);
 		}
 		
-		// Home_Menu.benList.get(i)
-		int index = -1;
-		int low = 0;
-		int high = Home_Menu.benList.size()-1;
-		while (low <= high && index == -1) {
-			int mid = (low + high) / 2;
-			if (Home_Menu.benList.get(mid).getID() == ID) {
-				index = mid;
-			} else if (Home_Menu.benList.get(mid).getID() > ID) {
-				high = mid - 1;
-			} else {
-				low = mid + 1;
-			}
-			
-			if (index >= 0) {
-				Data_Entry_Screen s = new Data_Entry_Screen(index);
-				s.setVisible(true);
-			} else {
-				JOptionPane.showMessageDialog(rootPane, "Value not found");
+		public void binarySearch(ArrayList<Beneficiary_Data> benList, ID) {
+			int index = -1;
+			int low = 0;
+			int high = Home_Menu.benList.size()-1;
+			while (low <= high && index == -1) {
+				int mid = (low + high) / 2;
+				if (Home_Menu.benList.get(mid).getID() == ID) {
+					index = mid;
+				} else if (Home_Menu.benList.get(mid).getID() > ID) {
+					high = mid - 1;
+				} else {
+					low = mid + 1;
+				}
+				
+				if (index >= 0) {
+					Data_Entry_Screen s = new Data_Entry_Screen(index);
+					s.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(rootPane, "Value not found");
+				}
 			}
 		}
+		
 		
 	}
 	

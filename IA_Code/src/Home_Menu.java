@@ -10,7 +10,7 @@ public class Home_Menu {
 	static Scanner in = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		
+
 		homeMenu();
 
 	}
@@ -24,7 +24,7 @@ public class Home_Menu {
 		do {
 			System.out.println("Following are the options:"); // asking the use to choose their option
 			System.out.println("1. Beneficiary Data");
-			System.out.println("2. Display Trend Lines");
+			System.out.println("2. Trend Analysis");
 			System.out.println("3. Exit Application");
 
 			System.out.println("Please enter number"); // asking the use to choose their option
@@ -125,7 +125,7 @@ public class Home_Menu {
 				System.out.println("For loop");
 //				Search_Screen s = new Search_Screen();
 //				s.setVisible(true);
-				
+
 //				bw.write(benList.get(i).getFirstName() + "," + benList.get(i).getLastName() + "," + benList.get(i).getID());
 				bw.newLine();
 				bw.flush();
@@ -147,7 +147,7 @@ public class Home_Menu {
 				System.out.println("For loop");
 //				Data_Entry_Screen n = new Data_Entry_Screen();
 //				n.setVisible(true);
-				
+
 //				bw.write(benList.get(i).getFirstName() + "," + benList.get(i).getLastName() + "," + benList.get(i).getID());
 				bw.newLine();
 				bw.flush();
@@ -181,7 +181,8 @@ public class Home_Menu {
 				b.setOtherName(s.split(",")[4]);
 				b.setSex(s.split(",")[5].charAt(0));
 				String dob = s.split(",")[6];
-				b.setDob(new Date(Integer.parseInt(dob.split("/")[0]), Integer.parseInt(dob.split("/")[1]), Integer.parseInt(dob.split("/")[2])));
+				b.setDob(new Date(Integer.parseInt(dob.split("/")[0]), Integer.parseInt(dob.split("/")[1]),
+						Integer.parseInt(dob.split("/")[2])));
 				a.setLine1(s.split("'")[7]);
 				a.setLine2(s.split("'")[8]);
 				a.setCity(s.split("'")[9]);
@@ -200,7 +201,7 @@ public class Home_Menu {
 				h.setCauseOfLoss(s.split(",")[22]);
 				h.setOther(s.split(",")[23]);
 				b.setCampInfo(s.split(",")[24]);
-				
+
 				Home_Menu.benList.add(b);
 			}
 
@@ -209,13 +210,63 @@ public class Home_Menu {
 			;
 		}
 	}
-	
-	private void quickSort() { // sorting the benList array
-		
+
+	// taking the last element as a pivot, places the pivot element at its correct
+	// position in sorted array places all elements before or after the pivot depending on whether or not it is larger
+	private void partition(ArrayList<Beneficiary_Data> arr, int low, int high) {
+		int pivot = arr[high];
+		int i = (low - 1); // index of smaller element
+		for (int j = low; j < high; j++) {
+			// If current element is smaller than the pivot
+			if (arr[j] < pivot) {
+				i++;
+
+				// swap arr[i] and arr[j]
+				int temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
+			}
+		}
+
+		// swap arr[i+1] and arr[high] (or pivot)
+		int temp = arr[i + 1];
+		arr[i + 1] = arr[high];
+		arr[high] = temp;
+
 	}
-	
-	private void partition() { // partitioning the list at the right place to be sorted
-		
+
+	private void quickSort(ArrayList<Beneficiary_Data> arr, int low, int high) { // sorting the benList array
+		if (low >= high){
+            return; // base case
+        }
+        if (low < high) {
+            /* pi is partitioning index, arr[pi] is  
+              now at right place */
+            int pi = partition(arr, low, high);
+
+            // Recursively sort elements before 
+            // partition and after partition 
+            sort(arr, low, pi - 1);
+            sort(arr, pi + 1, high);
+        }
 	}
+
+//	public static int binarySearch(ArrayList<Beneficiary_Data> ar, int key) {
+//        int low = 0;
+//        int high = ar.size() - 1;
+//        while(low <= high) {
+//            int middle = low + (high-1)/2;
+//            if(ar.get(middle).getID() == key) {
+//                return middle;
+//            }
+//            if(ar.get(middle).getID() < key ) {
+//                low = middle + 1;
+//            }
+//            else {
+//                high = middle - 1;
+//            }
+//        }
+//        return -1;
+//	}
 
 }
