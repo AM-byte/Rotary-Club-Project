@@ -1,6 +1,8 @@
 
 import java.io.*;
+
 import java.util.*;
+
 import java.math.*;
 
 public class Home_Menu {
@@ -11,6 +13,16 @@ public class Home_Menu {
 
 	public static void main(String[] args) {
 
+		readData();
+
+//		readDataScanner();
+//		
+		for(Beneficiary_Data b: benList) {
+			System.out.println(b.getID() + ": "+  b.getDob() + ":"+b.getOccupation() + " " + b.getHand().getLOREI()+ " "+b.getHand().getCauseOfLoss()
+					
+					
+					+ ": "+b.getHand().getLossYear());
+		}
 		homeMenu();
 
 	}
@@ -38,8 +50,9 @@ public class Home_Menu {
 				break;
 
 			case 2:
-				// selected trend lines
-				System.out.println("Trend Lines");
+				// selected trend analysis, make histograms
+				System.out.println("Trend Analysis");
+				trendAnalysis();
 				break;
 
 			case 3:
@@ -92,7 +105,7 @@ public class Home_Menu {
 				// editing/deleting ben data
 				Search_Screen s = new Search_Screen();
 				s.setVisible(true);
-				editData();
+//				editData();
 				break;
 
 			case 3:
@@ -107,7 +120,7 @@ public class Home_Menu {
 
 			default:
 				// display error message and accept new value
-				System.out.println("You have entered an invalid value. Accepted values are 1, 2 or 3");
+				System.out.println("You have entered an invalid value. Accepted values are 1, 2, 3 or 4");
 //				option = in.nextInt();
 				benData();
 			}
@@ -116,22 +129,60 @@ public class Home_Menu {
 
 	}
 
+	public static void trendAnalysis() { // method is called if the use selects the trend analysis option in the home
+											// menu
+
+		int option;
+		Scanner in2 = new Scanner(System.in);
+		System.out.println("Following are the options:"); // asking user to choose their option
+		System.out.println("1. Display histogram");
+		System.out.println("2. Back to home menu");
+		System.out.println("3. Exit Application");
+		// option = in2.nextInt();
+		do {
+			System.out.println("Please enter number");
+			option = in2.nextInt();
+			switch (option) { // switch case to complement the user's selection
+
+			case 1:
+				// displaying the histogram
+				System.out.println("Histogram option was successfully selected");
+
+				break;
+
+			case 2:
+				// going back to home menu
+				homeMenu();
+				break;
+
+			case 3:
+				// quit
+				System.exit(0);
+				break;
+
+			default:
+				// display error message and accept new value
+				System.out.println("You have entered an invalid value. Accepted values are 1, 2 or 3");
+//				option = in.nextInt();
+				trendAnalysis();
+			}
+
+		} while (option != 1 && option != 2 && option != 3 && option != 4);
+
+	}
+
 	public static void editData() { // write to file (file writer) method
 		try {
-			File benData = new File("/Users/arnavmahale/Documents/CS IA/files/benData.csv");
+			File benData = new File("/Users/arnavmahale/Documents/CS IA/files/benDataNew.csv");
 			FileWriter fw = new FileWriter(benData);
 			BufferedWriter bw = new BufferedWriter(fw);
 			for (int i = 0; i < benList.size(); i++) {
-				System.out.println("For loop");
-//				Search_Screen s = new Search_Screen();
-//				s.setVisible(true);
 
-//				bw.write(benList.get(i).getFirstName() + "," + benList.get(i).getLastName() + "," + benList.get(i).getID());
+				bw.write(benList.get(i).getFirstName() + "," + benList.get(i).getLastName() + "," + benList.get(i).getID());
 				bw.newLine();
 				bw.flush();
 			}
 			bw.close();
-			System.out.println("File Written");
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -140,20 +191,17 @@ public class Home_Menu {
 
 	public static void addData() { // append to file (file writer) method
 		try {
-			File benData = new File("/Users/arnavmahale/Documents/CS IA/files/benData.csv");
+			File benData = new File("/Users/arnavmahale/Documents/CS IA/files/benDataNew.csv");
 			FileWriter fw = new FileWriter(benData, true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			for (int i = 0; i < benList.size(); i++) {
-				System.out.println("For loop");
-//				Data_Entry_Screen n = new Data_Entry_Screen();
-//				n.setVisible(true);
 
-//				bw.write(benList.get(i).getFirstName() + "," + benList.get(i).getLastName() + "," + benList.get(i).getID());
+				bw.write(benList.get(i).getFirstName() + "," + benList.get(i).getLastName() + ","
+						+ benList.get(i).getID());  //add codes
 				bw.newLine();
 				bw.flush();
 			}
 			bw.close();
-			System.out.println("File Written");
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -161,111 +209,156 @@ public class Home_Menu {
 	}
 
 	public static void readData() { // file reading method
+
 		File f = new File("/Users/arnavmahale/Documents/CS IA/files/benData.csv");
 		String s = "";
+		String[] values = null;
 		try {
 			f.createNewFile();
 			FileReader fr = new FileReader(f);
 			BufferedReader buffer = new BufferedReader(fr);
 
+			// reading objects from csv file to store in the benList Array List
 			while ((s = buffer.readLine()) != null) {
+
 				Beneficiary_Data b = new Beneficiary_Data();
-//				Address a = new Address();
-//				Contact c = new Contact();
-//				Hand h = new Hand();
+				values = s.split(",");
 
-				b.setID(Integer.parseInt(s.split(",")[0]));
-				b.setBadgeNum(s.split(",")[1]);
-				b.setFirstName(s.split(",")[2]);
-				b.setLastName(s.split(",")[3]);
-				b.setOtherName(s.split(",")[4]);
-				b.setSex(s.split(",")[5].charAt(0));
+				for (String i : values) {
+					System.out.println(i);
+				}
+
+				b.setID(Integer.parseInt(values[0]));
+				b.setBadgeNum(values[1]);
+				b.setFirstName(values[2]);
+				b.setLastName(values[3]);
+				b.setOtherName(values[4]);
+				String s1 = values[5];
+				b.setSex(s1.charAt(0));
+
 				String dob = s.split(",")[6];
-				b.setDob(new Date(Integer.parseInt(dob.split("/")[0]), Integer.parseInt(dob.split("/")[1]), Integer.parseInt(dob.split("/")[2])));
-//				a.setLine1(s.split("'")[7]);
-//				a.setLine2(s.split("'")[8]);
-//				a.setCity(s.split("'")[9]);
-//				a.setPost(s.split(",")[10]);
-//				a.setTaluka(s.split(",")[11]);
-//				a.setPost(s.split(",")[12]);
-//				a.setState(s.split(",")[13]);
-//				a.setPinCode(Integer.parseInt(s.split(",")[14]));
-//				c.setPhoneNum1(Integer.parseInt(s.split(",")[15]));
-//				c.setPhoneNum2(Integer.parseInt(s.split(",")[16]));
-//				c.setEmail(s.split(",")[17]);
-				b.setOccupation(s.split(",")[18]);
-//				h.setLOREI(Double.parseDouble(s.split(",")[19]));
-//				h.setLostHand(s.split(",")[20]);
-//				h.setLossYear(Integer.parseInt(s.split(",")[21]));
-//				h.setCauseOfLoss(s.split(",")[22]);
-//				h.setOther(s.split(",")[23]);
-				b.setCampInfo(s.split(",")[24]);
+				b.setDob(new Date(dob));
+				b.getAddress().setLine1(values[7]);
+				b.getAddress().setLine2(values[8]);
+				b.getAddress().setCity(values[9]);
+				b.getAddress().setPost(values[10]);
+				b.getAddress().setTaluka(values[11]);
+				b.getAddress().setDistrict(values[12]);
+				b.getAddress().setState(values[13]);
+				b.getAddress().setPinCode(values[14]);
+				b.getContact().setPhoneNum1(values[15]);
+				b.getContact().setPhoneNum2(values[16]);
+				b.getContact().setEmail(values[17]);
+				b.setOccupation(values[18]);
 
-				Home_Menu.benList.add(b);
+				String d = values[19];
+				b.getHand().setLOREI(Double.parseDouble(d));
+				b.getHand().setLostHand(values[20]);
+				b.getHand().setLossYear(Integer.parseInt(values[21]));
+				b.getHand().setCauseOfLoss(values[22]);
+				b.getHand().setOther(values[23]);
+				b.setCampInfo(values[24]);
+
+				benList.add(b);
+
 			}
+
+			fr.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
-			;
+
 		}
+
 	}
 
-	// taking the last element as a pivot, places the pivot element at its correct
-	// position in sorted array places all elements before or after the pivot depending on whether or not it is larger
-	private void partition(ArrayList<Beneficiary_Data> arr, int low, int high) {
-		int pivot = arr[high];
-		int i = (low - 1); // index of smaller element
-		for (int j = low; j < high; j++) {
-			// If current element is smaller than the pivot
-			if (arr[j] < pivot) {
-				i++;
+	public static void readDataScanner() { // file reading method
 
-				// swap arr[i] and arr[j]
-				int temp = arr[i];
-				arr[i] = arr[j];
-				arr[j] = temp;
+		File f = new File("/Users/arnavmahale/Documents/CS IA/files/benData.csv");
+		String s = "";
+		String[] values = null;
+		try {
+			Scanner sc = new Scanner(f);
+
+			// reading objects from csv file to store in the benList Array List
+			while (sc.hasNext()) {
+
+				Beneficiary_Data b = new Beneficiary_Data();
+				s = sc.nextLine();
+				values = s.split(",");
+
+				b.setID(Integer.parseInt(values[0]));
+				b.setBadgeNum(values[1]);
+				b.setFirstName(values[2]);
+				b.setLastName(values[3]);
+				b.setOtherName(values[4]);
+				String s1 = values[5];
+				b.setSex(s1.charAt(0));
+
+				String dob = s.split(",")[6];
+				b.getAddress().setLine1(values[7]);
+				b.getAddress().setLine2(values[8]);
+				b.getAddress().setCity(values[9]);
+				b.getAddress().setPost(values[10]);
+				b.getAddress().setTaluka(values[11]);
+				b.getAddress().setDistrict(values[12]);
+				b.getAddress().setState(values[13]);
+				b.getAddress().setPinCode(values[14]);
+				b.getContact().setPhoneNum1(values[15]);
+				b.getContact().setPhoneNum2(values[16]);
+				b.getContact().setEmail(values[17]);
+				b.setOccupation(values[18]);
+
+				String d = values[19];
+				b.getHand().setLOREI(Double.parseDouble(d));
+				b.getHand().setLostHand(values[20]);
+				b.getHand().setLossYear(Integer.parseInt(values[21]));
+				b.getHand().setCauseOfLoss(values[22]);
+				b.getHand().setOther(values[23]);
+				b.setCampInfo(values[24]);
+
+				benList.add(b);
+
 			}
+
+		} catch (IOException e) {
+			System.out.println(e);
+
 		}
 
-		// swap arr[i+1] and arr[high] (or pivot)
-		int temp = arr[i + 1];
-		arr[i + 1] = arr[high];
-		arr[high] = temp;
-
 	}
 
-	private void quickSort(ArrayList<Beneficiary_Data> arr, int low, int high) { // sorting the benList array
-		if (low >= high){
-            return; // base case
-        }
-        if (low < high) {
-            /* pi is partitioning index, arr[pi] is  
-              now at right place */
-            int pi = partition(arr, low, high);
+	public static void serialize(ArrayList<Beneficiary_Data> list) {
+		try {
+			FileOutputStream fileOut = new FileOutputStream("/Users/arnavmahale/Documents/CS IA/files/benData.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			for (int i = 0; i < list.size(); i++) {
 
-            // Recursively sort elements before 
-            // partition and after partition 
-            sort(arr, low, pi - 1);
-            sort(arr, pi + 1, high);
-        }
+				out.writeObject(list.get(i));
+			}
+			out.close();
+			fileOut.close();
+			System.out.println("Serialized data is saved in /Users/arnavmahale/Documents/CS IA/files/benData.ser");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-//	public static int binarySearch(ArrayList<Beneficiary_Data> ar, int key) {
-//        int low = 0;
-//        int high = ar.size() - 1;
-//        while(low <= high) {
-//            int middle = low + (high-1)/2;
-//            if(ar.get(middle).getID() == key) {
-//                return middle;
-//            }
-//            if(ar.get(middle).getID() < key ) {
-//                low = middle + 1;
-//            }
-//            else {
-//                high = middle - 1;
-//            }
-//        }
-//        return -1;
-//	}
+	public static void deserialize() {
+		try {
+			FileInputStream fileIn = new FileInputStream("/Users/arnavmahale/Documents/CS IA/files/benData.ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			Beneficiary_Data b = new Beneficiary_Data();
+			b = (Beneficiary_Data) in.readObject();
+			in.close();
+			fileIn.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e2) {
+			System.out.println("Beneficiary Data not found");
+			e2.printStackTrace();
+		}
+	}
 
 }

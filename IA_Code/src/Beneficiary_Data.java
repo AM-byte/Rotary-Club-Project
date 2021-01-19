@@ -1,6 +1,7 @@
 
 public class Beneficiary_Data {
 	// declaring all required variables
+	private static int x=6008;  // auto-id increment
 	private int ID;
 	private String badgeNum, firstName, lastName, otherName, occupation, campInfo;
 	private char sex;
@@ -10,10 +11,12 @@ public class Beneficiary_Data {
 	private Hand hand;
 
 	public Beneficiary_Data() {
+		ID = x;
 		address = new Address();
 		contact = new Contact();
 		dob = new Date();
 		hand = new Hand();
+		x++;
 	}
 	
 	public void personalDetails(int id, String bn, String fn, String ln, String on, char s, String o, String ci) {
@@ -28,7 +31,7 @@ public class Beneficiary_Data {
 		
 	}
 
-	public void address(String l1, String l2, String c, String p, String t, String d, String s, int pc) {
+	public void address(String l1, String l2, String c, String p, String t, String d, String s, String pc) {
 		address.setLine1(l1);
 		address.setLine2(l2);
 		address.setCity(c);
@@ -40,15 +43,15 @@ public class Beneficiary_Data {
 		
 	}
 	
-	public void contact(int p1, int p2, String email) {
+	public void contact(String p1, String p2, String email) {
 		contact.setPhoneNum1(p1);
 		contact.setPhoneNum2(p2);
 		contact.setEmail(email);
 		
 	}
 	
-	public void date(int d, int m, int y) {
-		dob.setDate(d);
+	public void date(int d, int m, int y)  {
+		dob.setDay(d);
 		dob.setMonth(m);
 		dob.setYear(y);
 		
