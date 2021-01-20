@@ -92,7 +92,7 @@ public class Date {
 		}
 	}
 
-	public void setYear(int y)  {
+	public void setYear(int y) {
 		try {
 			if (!isValidYear(y)) {
 				throw new Exception("Invalid year");

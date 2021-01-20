@@ -5,54 +5,35 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.AbstractListModel;
-import java.awt.FlowLayout;
-import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
-import javax.swing.JRadioButton;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Data_Entry_Screen extends JFrame {
 
-//	ArrayList<Beneficiary_Data> benList = new ArrayList<Beneficiary_Data>();
-
 	private JPanel contentPane;
 	private JTextField IDtextfield;
 
-	// Requires edition
+	// Requires addition
 	private int ID = 0;
 	private String badgeNum = "", firstName = "", lastName = "", otherName = "", occupation = "", campInfo = "";
-	private char sex;
-//	private Date date;
+	private String sex;
 	private String dob = "";
-//	private Address address;
 	private String line1 = "", line2 = "", city = "", post = "", taluka = "", district = "", state = "";
 	private String pinCode = "";
-//	private Contact contact;
 	private String phoneNum1 = "", phoneNum2 = "";
 	private String email = "";
-//	private Hand hand;
 	private double LOREI = 0;
 	private String lostHand = "", causeOfLoss = "", other = "";
 	private int lossYear = 0;
@@ -107,6 +88,7 @@ public class Data_Entry_Screen extends JFrame {
 	 * Create the frame.
 	 */
 	public Data_Entry_Screen() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -114,8 +96,6 @@ public class Data_Entry_Screen extends JFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	
-		setResizable(false);
 
 		initComponents();
 
@@ -156,7 +136,7 @@ public class Data_Entry_Screen extends JFrame {
 
 	}
 
-	public  boolean validName(String name) {
+	public boolean validName(String name) {
 		boolean valid = true;
 		char[] chars = name.toCharArray();
 		for (char c : chars) {
@@ -166,35 +146,34 @@ public class Data_Entry_Screen extends JFrame {
 		}
 		return valid;
 	}
-	
-	public  boolean validDate(String date) {
+
+	public boolean validDate(String date) {
 		boolean valid = true;
 		try {
 			Date d = new Date(date);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			valid = false;
 		}
-		
+
 		return valid;
 	}
-	
+
 	public boolean onlyDigits(String str, int n) {
-		for ( int i = 0; i < n; i++) {
-			if  (!(str.charAt(i) >= '0' && str.charAt(i) <= '9')) {
+		for (int i = 0; i < n; i++) {
+			if (!(str.charAt(i) >= '0' && str.charAt(i) <= '9')) {
 				return false;
-			} 
+			}
 		}
 		return true;
 	}
-	
+
 	public boolean containNumbersOnly(String source) {
-		
+
 		source = source.trim();
 		boolean result = false;
 		Pattern pattern = Pattern.compile("[0-9]+.[0-9]+"); // correct pattern for both float and integer
 		pattern = Pattern.compile("\\d+.\\d"); // correct pattern for both float and integer
-		
+
 		result = pattern.matcher(source).matches();
 		if (result) {
 			System.out.println("\"" + source + "\"" + " is a number");
@@ -214,7 +193,7 @@ public class Data_Entry_Screen extends JFrame {
 		firstName = firstNametextField.getText();
 		lastName = lastNametextField.getText();
 		otherName = otherNametextField.getText();
-		sex = sexcomboBox.getSelectedItem().toString().charAt(0);
+		sex = sexcomboBox.getSelectedItem().toString();
 		dob = dobtextField.getText();
 		line1 = address1textArea.getText();
 		line2 = address2textArea.getText();
@@ -234,30 +213,19 @@ public class Data_Entry_Screen extends JFrame {
 		causeOfLoss = causeOfLosscomboBox.getSelectedItem().toString();
 		other = othertextField.getText();
 		campInfo = infocomboBox.getSelectedItem().toString();
-		
-		
-		
 
-		
 		// validation
-		System.out.println(badgeNum.equals("")  + ": "+validName(firstName) 
-			+ ": "+  validName(lastName) + ": "+ validName(otherName) + ": "+ validDate(dob) + ": "+ line1.equals(""));
-		System.out.println( validName(city) + ": "+ city.equals("") + ": "+ validName(post) + ": "+ validName(taluka) + ": "+ validName(district) + ": "+ district.equals(""));
-		System.out.println((phoneNum1.length()!=11) + ": "+ phoneNum1.equals("") + ": "+ (phoneNum2.length()!=11) + ": "+ !email.contains("@") + ": "+ !email.contains("."));
-		System.out.println(containNumbersOnly(LOREItextField.getText()) + ": "+ onlyDigits(yearOfLosstextField.getText(),(yearOfLosstextField.getText().length() )));
-		
-		
-		// validation
-		if(badgeNum.equals("") && validName(firstName) &&  validName(lastName) && validName(otherName) && validDate(dob) && line1.equals("")
-				&& validName(city) && city.equals("") && validName(post) && validName(taluka) && validName(district) && district.equals("")
-				&& (phoneNum1.length()!=11) && phoneNum1.equals("") && (phoneNum2.length()!=11) && !email.contains("@") && !email.contains(".")
-				&& containNumbersOnly(LOREItextField.getText()) && onlyDigits(yearOfLosstextField.getText(),(yearOfLosstextField.getText().length() ))) {
+		if (badgeNum.equals("") && validName(firstName) && validName(lastName) && validName(otherName) && validDate(dob)
+				&& line1.equals("") && validName(city) && city.equals("") && validName(post) && validName(taluka)
+				&& validName(district) && district.equals("") && (phoneNum1.length() != 11) && phoneNum1.equals("")
+				&& (phoneNum2.length() != 11) && !email.contains("@") && !email.contains(".")
+				&& containNumbersOnly(LOREItextField.getText())
+				&& onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length()))) {
 			valid = false;
-			
-			System.out.println(valid);
 		}
 
-		// adding all the variables to their respective constructors and then adding the one beneficiary to the benList Array List
+		// adding all the variables to their respective constructors and then adding the
+		// one beneficiary to the benList Array List
 		if (valid) {
 
 			b.personalDetails(ID, badgeNum, firstName, lastName, otherName, sex, occupation, campInfo);
@@ -266,24 +234,15 @@ public class Data_Entry_Screen extends JFrame {
 			b.date(Integer.parseInt(dob.split("/")[0]), Integer.parseInt(dob.split("/")[1]),
 					Integer.parseInt(dob.split("/")[2]));
 			Home_Menu.benList.add(b);
-//			System.out.println("Values added");
-//			for (int i = 0; i < Home_Menu.benList.size(); i++) {
-//				System.out.println(Home_Menu.benList.get(i).getID());
-//			}
-
-//			fileSerialize(b);
 
 			Home_Menu.addData();
-			
-//			Home_Menu.editData();  //overwriting
-			
-//			Home_Menu.serialize(Home_Menu.benList);
+
+			String[] buttons = { "Add more", "Back to Menu" };
 
 			JOptionPane.showMessageDialog(rootPane, "Data Added");
-			this.dispose();
+			reset();
 
 			Home_Menu.benData();
-			
 
 		} else {
 			JOptionPane.showMessageDialog(rootPane, "invalid data");
@@ -291,17 +250,33 @@ public class Data_Entry_Screen extends JFrame {
 
 	}
 
-	private void fileSerialize(Beneficiary_Data b) {
-		try {
-			FileOutputStream fileOut = new FileOutputStream("/Users/arnavmahale/Documents/CS IA/files/benData.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(b);
-			out.close();
-			fileOut.close();
-			System.out.println("Serialized");
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+	private void reset() {
+		IDtextfield.setText("");
+		badgeNumtextField.setText("");
+		firstNametextField.setText("");
+		lastNametextField.setText("");
+		otherNametextField.setText("");
+		sexcomboBox.setSelectedItem("");
+		dobtextField.setText("");
+		address1textArea.setText("");
+		address2textArea.setText("");
+		citytextField.setText("");
+		posttextField.setText("");
+		talukatextField.setText("");
+		districttextField.setText("");
+		statecomboBox.setSelectedItem("");
+		pinCodetextField.setText("");
+		phoneNum1textField.setText("");
+		phoneNum2textField.setText("");
+		emailtextField.setText("");
+		occupationcomboBox.setSelectedItem("");
+		LOREItextField.setText("");
+		lostHandcomboBox.setSelectedItem("");
+		yearOfLosstextField.setText("");
+		causeOfLosscomboBox.setSelectedItem("");
+		othertextField.setText("");
+		infocomboBox.setSelectedItem("");
+
 	}
 
 	private void dobtextFieldActionPerformed() {

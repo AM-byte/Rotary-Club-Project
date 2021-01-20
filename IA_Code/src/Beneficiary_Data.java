@@ -4,7 +4,7 @@ public class Beneficiary_Data {
 	private static int x=6008;  // auto-id increment
 	private int ID;
 	private String badgeNum, firstName, lastName, otherName, occupation, campInfo;
-	private char sex;
+	private String sex;
 	private Date dob;
 	private Address address;
 	private Contact contact;
@@ -19,7 +19,7 @@ public class Beneficiary_Data {
 		x++;
 	}
 	
-	public void personalDetails(int id, String bn, String fn, String ln, String on, char s, String o, String ci) {
+	public void personalDetails(int id, String bn, String fn, String ln, String on, String s, String o, String ci) {
 		this.ID = id;
 		this.badgeNum = bn;
 		this.firstName = fn;
@@ -125,11 +125,11 @@ public class Beneficiary_Data {
 		this.campInfo = campInfo;
 	}
 
-	public char getSex() {
+	public String getSex() {
 		return sex;
 	}
 
-	public void setSex(char sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 

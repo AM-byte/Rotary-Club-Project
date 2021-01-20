@@ -1,4 +1,5 @@
 import java.util.*;
+
 import java.io.*;
 
 import java.awt.BorderLayout;
@@ -58,16 +59,15 @@ public class Search_Screen extends JFrame {
 	}
 
 	public void binarySearch(ArrayList<Beneficiary_Data> benList, int ID) {
-		
 
-		int count=0;
+		int count = 0;
 		for (Beneficiary_Data b : benList) {
-			System.out.println("ID: " +b.getID() + "---" + count)  ;
+			System.out.println("ID: " + b.getID() + "---" + count);
 			count++;
 		}
 		int index = -1;
 		int low = 0;
-		int high = benList.size()-1;
+		int high = benList.size() - 1;
 		while (low <= high && index == -1) {
 			int mid = (low + high) / 2;
 			if (benList.get(mid).getID() == ID) {
@@ -80,12 +80,10 @@ public class Search_Screen extends JFrame {
 		}
 		System.out.println(index + ": index");
 
-		if (index >= 0) 
-		{
+		if (index >= 0) {
 			Edit_Screen s = new Edit_Screen(index);
 			s.setVisible(true);
-		} 
-		else {
+		} else {
 			JOptionPane.showMessageDialog(rootPane, "ID not found");
 		}
 
@@ -135,23 +133,19 @@ public class Search_Screen extends JFrame {
 		}
 
 		sortedBenList = arr;
-
-//		for (Beneficiary_Data b : sortedBenList) {
-//			System.out.println(b.getID());
-//		}
 	}
 
 	public Search_Screen() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				Home_Menu.benData();
 			}
 		});
-		
+
 		initComponents();
 		quickSort(Home_Menu.benList, 0, Home_Menu.benList.size() - 1);
-		
 
 	}
 
