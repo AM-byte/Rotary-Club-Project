@@ -12,7 +12,7 @@ public class Address {
 		if (line1 != null) {
 			this.line1 = line1;
 		} else {
-			this.line1 = "";
+			this.line1 = " ";
 		}
 	}
 

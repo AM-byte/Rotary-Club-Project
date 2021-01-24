@@ -1,3 +1,4 @@
+
 import java.awt.BorderLayout;
 
 import java.awt.EventQueue;
@@ -39,16 +40,16 @@ public class Edit_Screen extends JFrame {
 	private JTextField IDtextfield;
 
 	// Requires addition
-	private int ID = 0;
-	private String badgeNum = "", firstName = "", lastName = "", otherName = "", occupation = "", campInfo = "";
+	private int ID = 0, index;
+	private String badgeNum = " ", firstName = " ", lastName = " ", otherName = " ", occupation = " ", campInfo = " ";
 	private String sex;
-	private String dob = "";
-	private String line1 = "", line2 = "", city = "", post = "", taluka = "", district = "", state = "";
-	private String pinCode = "";
-	private String phoneNum1 = "", phoneNum2 = "";
-	private String email = "";
+	private String dob = " ";
+	private String line1 = " ", line2 = " ", city = " ", post = " ", taluka = " ", district = " ", state = " ";
+	private String pinCode = " ";
+	private String phoneNum1 = " ", phoneNum2 = " ";
+	private String email = " ";
 	private double LOREI = 0;
-	private String lostHand = "", causeOfLoss = "", other = "";
+	private String lostHand = " ", causeOfLoss = " ", other = " ";
 	private int lossYear = 0;
 
 	private JTextField badgeNumtextField;
@@ -81,47 +82,14 @@ public class Edit_Screen extends JFrame {
 	private JButton btnSavePrint;
 	Beneficiary_Data b;
 	private JTextField agetextField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Edit_Screen frame = new Edit_Screen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public Edit_Screen() {
-		setResizable(false);
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				Home_Menu.benData();
-			}
-		});
-
-		initComponents();
-
-		b = new Beneficiary_Data();
-		IDtextfield.setText(b.getID() + "");
-
-	}
-
+	
 	public Edit_Screen(int index) {
 		initComponents();
-
-		Beneficiary_Data b = Home_Menu.benList.get(index);
-
+		this.setAlwaysOnTop(true);
+		
+		b = Home_Menu.benList.get(index);
+		this.index=index;
+		
 		IDtextfield.setText(b.getID() + "");
 		badgeNumtextField.setText(b.getBadgeNum());
 		firstNametextField.setText(b.getFirstName());
@@ -148,6 +116,8 @@ public class Edit_Screen extends JFrame {
 		causeOfLosscomboBox.setSelectedItem(b.getHand().getCauseOfLoss());
 		othertextField.setText(b.getHand().getOther());
 		infocomboBox.setSelectedItem(b.getCampInfo());
+		ID = b.getID();
+		
 
 	}
 
@@ -196,11 +166,17 @@ public class Edit_Screen extends JFrame {
 		return result;
 	}
 
-	private void btnSavePrintActionPerformed() { // actions performed after the Save n Print button is pressed
+
+	private void btnSavePrintActionPerformed(int id) { // actions performed after the Save n Print button is pressed
 
 		// getting all the variables from the form
 		boolean valid = true;
+		
+		int index;
+		
+		b =  Home_Menu.benList.get(this.index);
 
+//		b =  Search_Screen.sortedBenList.get(index);
 		ID = b.getID();
 		badgeNum = badgeNumtextField.getText();
 		firstName = firstNametextField.getText();
@@ -228,9 +204,9 @@ public class Edit_Screen extends JFrame {
 		campInfo = infocomboBox.getSelectedItem().toString();
 
 		// validation
-		if (badgeNum.equals("") && validName(firstName) && validName(lastName) && validName(otherName) && validDate(dob)
-				&& line1.equals("") && validName(city) && city.equals("") && validName(post) && validName(taluka)
-				&& validName(district) && district.equals("") && (phoneNum1.length() != 11) && phoneNum1.equals("")
+		if (badgeNum.equals(" ") && validName(firstName) && validName(lastName) && validName(otherName) && validDate(dob)
+				&& line1.equals(" ") && validName(city) && city.equals(" ") && validName(post) && validName(taluka)
+				&& validName(district) && district.equals(" ") && (phoneNum1.length() != 11) && phoneNum1.equals(" ")
 				&& (phoneNum2.length() != 11) && !email.contains("@") && !email.contains(".")
 				&& containNumbersOnly(LOREItextField.getText())
 				&& onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length()))) {
@@ -246,18 +222,30 @@ public class Edit_Screen extends JFrame {
 			b.checkUp(LOREI, lostHand, causeOfLoss, other, lossYear);
 			b.date(Integer.parseInt(dob.split("/")[0]), Integer.parseInt(dob.split("/")[1]),
 					Integer.parseInt(dob.split("/")[2]));
-			Home_Menu.benList.add(b);
-			Home_Menu.addData();
-			Home_Menu.benData();
+			
+			
+			
+			for(int i = 0; i < Home_Menu.benList.size(); i++) {
+				if (b.getID() ==Home_Menu.benList.get(i).getID()) {
+					Home_Menu.benList.remove(i);
+					Home_Menu.benList.add(b);
+				}
+			}
+			for(int i = 0; i<Home_Menu.benList.size();i++) {
+				System.out.println(Home_Menu.benList);
 
+			}
+			
+			Home_Menu.addData();
+			this.dispose();
+			
 		} else {
 			JOptionPane.showMessageDialog(rootPane, "Invalid Data");
 		}
 
 	}
-
 	private void dobtextFieldActionPerformed() {
-		dobtextField.setText("");
+		dobtextField.setText(" ");
 	}
 
 	// gui code
@@ -283,7 +271,7 @@ public class Edit_Screen extends JFrame {
 
 		statecomboBox.setBounds(483, 29, 136, 20);
 		statecomboBox.setModel(new DefaultComboBoxModel(
-				new String[] { "", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa",
+				new String[] { " ", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa",
 						"Gujarat", "Haryana", "Himachal Pradesh", "Jharkand", "Karnataka", "Kerala", "Madhya Pradesh",
 						"Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan",
 						"Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
@@ -335,7 +323,7 @@ public class Edit_Screen extends JFrame {
 
 		sexcomboBox = new JComboBox();
 		sexcomboBox.setBounds(125, 186, 130, 27);
-		sexcomboBox.setModel(new DefaultComboBoxModel(new String[] { "", "Male", "Female", "Other" }));
+		sexcomboBox.setModel(new DefaultComboBoxModel(new String[] { " ", "Male", "Female", "Other" }));
 
 		JLabel lblNewLabel_10 = new JLabel("Address Line 2:");
 		lblNewLabel_10.setBounds(6, 316, 107, 16);
@@ -427,12 +415,12 @@ public class Edit_Screen extends JFrame {
 		occupationcomboBox = new JComboBox();
 		occupationcomboBox.setBounds(483, 200, 136, 27);
 		occupationcomboBox.setModel(
-				new DefaultComboBoxModel(new String[] { "", "School", "College", "Home", "Working", "Others" }));
+				new DefaultComboBoxModel(new String[] { " ", "School", "College", "Home", "Working", "Others" }));
 
 		lostHandcomboBox = new JComboBox();
 		lostHandcomboBox.setBounds(483, 280, 136, 26);
 		lostHandcomboBox
-				.setModel(new DefaultComboBoxModel(new String[] { "", "Right hand", "Left hand", "Both hands" }));
+				.setModel(new DefaultComboBoxModel(new String[] { " ", "Right hand", "Left hand", "Both hands" }));
 
 		yearOfLosstextField = new JTextField();
 		yearOfLosstextField.setBounds(489, 321, 130, 26);
@@ -440,7 +428,7 @@ public class Edit_Screen extends JFrame {
 
 		causeOfLosscomboBox = new JComboBox();
 		causeOfLosscomboBox.setBounds(489, 362, 130, 27);
-		causeOfLosscomboBox.setModel(new DefaultComboBoxModel(new String[] { "", "Accident - Agricultural",
+		causeOfLosscomboBox.setModel(new DefaultComboBoxModel(new String[] { " ", "Accident - Agricultural",
 				"Accident - Electrocution", "Accident - Industrial", "Accident - Vehicular", "Birth Defect",
 				"Violence, Robbery, etc.", "War, Landmine, etc.", "Others" }));
 
@@ -451,13 +439,13 @@ public class Edit_Screen extends JFrame {
 		infocomboBox = new JComboBox();
 		infocomboBox.setBounds(499, 442, 120, 27);
 		infocomboBox.setModel(new DefaultComboBoxModel(
-				new String[] { "", "Friends", "Hospital", "Posters", "Rotary Volunteer", "WhatsApp" }));
+				new String[] { " ", "Friends", "Hospital", "Posters", "Rotary Volunteer", "WhatsApp" }));
 
 		btnSavePrint = new JButton("Save n Print");
 		btnSavePrint.setBounds(247, 474, 117, 29);
 		btnSavePrint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnSavePrintActionPerformed();
+				btnSavePrintActionPerformed(index);
 			}
 		});
 

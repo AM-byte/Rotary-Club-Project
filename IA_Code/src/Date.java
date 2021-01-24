@@ -1,3 +1,4 @@
+
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -223,48 +224,6 @@ public class Date {
 		} else {
 			return this.getDay() - date2.getDay();
 		}
-	}
-
-	private static int daysPassed(int d, int m, int y) {
-		int result = 0;
-		int[] daysUpToMonth = { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 };
-		int[] daysUpToMonthLeapYear = { 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 };
-		int leapYears = y / 4 - y / 100 + y / 400;
-		y--;
-		if (isLeapYear(y)) {
-			result = y * 365 + leapYears + daysUpToMonthLeapYear[m - 1] + d - 1;
-		} else {
-			result = y * 365 + leapYears + daysUpToMonth[m - 1] + d - 1;
-		}
-		return result;
-	}
-
-	public int differenceInDays(Date date2) {
-		if (this.equals(date2)) {
-			return 0;
-		}
-		int result = 0;
-		int startDay, startMonth, startYear, endDay, endMonth, endYear;
-
-		if (this.getAge(date2) < 0) {
-			startDay = this.getDay();
-			startMonth = this.getMonth();
-			startYear = this.getYear();
-			endDay = date2.getDay();
-			endMonth = date2.getMonth();
-			endYear = date2.getYear();
-		} else {
-			endDay = this.getDay();
-			endMonth = this.getMonth();
-			endYear = this.getYear();
-			startDay = date2.getDay();
-			startMonth = date2.getMonth();
-			startYear = date2.getYear();
-		}
-
-		result = daysPassed(endDay, endMonth, endYear) - daysPassed(startDay, startMonth, startYear);
-
-		return result;
 	}
 
 }

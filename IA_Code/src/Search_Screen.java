@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 import java.io.*;
@@ -25,22 +26,6 @@ public class Search_Screen extends JFrame {
 	private JTextField IDtextField;
 
 	static ArrayList<Beneficiary_Data> sortedBenList = new ArrayList<Beneficiary_Data>();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Search_Screen frame = new Search_Screen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -78,7 +63,7 @@ public class Search_Screen extends JFrame {
 				low = mid + 1;
 			}
 		}
-		System.out.println(index + ": index");
+//		System.out.println(index + ": index");
 
 		if (index >= 0) {
 			Edit_Screen s = new Edit_Screen(index);
@@ -146,6 +131,7 @@ public class Search_Screen extends JFrame {
 
 		initComponents();
 		quickSort(Home_Menu.benList, 0, Home_Menu.benList.size() - 1);
+		this.setAlwaysOnTop(true);
 
 	}
 
