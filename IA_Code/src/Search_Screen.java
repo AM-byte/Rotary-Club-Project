@@ -45,11 +45,7 @@ public class Search_Screen extends JFrame {
 
 	public void binarySearch(ArrayList<Beneficiary_Data> benList, int ID) {
 
-		int count = 0;
-		for (Beneficiary_Data b : benList) {
-			System.out.println("ID: " + b.getID() + "---" + count);
-			count++;
-		}
+
 		int index = -1;
 		int low = 0;
 		int high = benList.size() - 1;
@@ -63,11 +59,13 @@ public class Search_Screen extends JFrame {
 				low = mid + 1;
 			}
 		}
-//		System.out.println(index + ": index");
 
 		if (index >= 0) {
 			Edit_Screen s = new Edit_Screen(index);
+			this.setVisible(false);
+
 			s.setVisible(true);
+
 		} else {
 			JOptionPane.showMessageDialog(rootPane, "ID not found");
 		}
@@ -121,14 +119,16 @@ public class Search_Screen extends JFrame {
 	}
 
 	public Search_Screen() {
-		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
+				setVisible(false);
 				Home_Menu.benData();
+
 			}
 		});
-
+		setResizable(false);
+		
 		initComponents();
 		quickSort(Home_Menu.benList, 0, Home_Menu.benList.size() - 1);
 		this.setAlwaysOnTop(true);

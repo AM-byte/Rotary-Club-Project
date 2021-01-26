@@ -89,38 +89,38 @@ public class Data_Entry_Screen extends JFrame {
 		IDtextfield.setText(b.getID() + "");
 	}
 
-	public Data_Entry_Screen(int index) {
-		initComponents();
-
-		Beneficiary_Data b = Home_Menu.benList.get(index);
-
-		IDtextfield.setText(b.getID() + "");
-		badgeNumtextField.setText(b.getBadgeNum());
-		firstNametextField.setText(b.getFirstName());
-		lastNametextField.setText(b.getLastName());
-		otherNametextField.setText(b.getOtherName());
-		sexcomboBox.setSelectedItem(b.getSex());
-		dobtextField.setText(b.getDob().toString());
-		address1textArea.setText(b.getAddress().getLine1());
-		address2textArea.setText(b.getAddress().getLine2());
-		citytextField.setText(b.getAddress().getCity());
-		posttextField.setText(b.getAddress().getPost());
-		talukatextField.setText(b.getAddress().getTaluka());
-		districttextField.setText(b.getAddress().getDistrict());
-		statecomboBox.setSelectedItem(b.getAddress().getState());
-		pinCodetextField.setText(b.getAddress().getPinCode() + "");
-		phoneNum1textField.setText(b.getContact().getPhoneNum1() + "");
-		phoneNum2textField.setText(b.getContact().getPhoneNum2() + "");
-		emailtextField.setText(b.getContact().getEmail());
-		occupationcomboBox.setSelectedItem(b.getOccupation());
-		LOREItextField.setText(b.getHand().getLOREI() + "");
-		lostHandcomboBox.setSelectedItem(b.getHand().getLostHand());
-		yearOfLosstextField.setText(b.getHand().getLossYear() + "");
-		causeOfLosscomboBox.setSelectedItem(b.getHand().getCauseOfLoss());
-		othertextField.setText(b.getHand().getOther());
-		infocomboBox.setSelectedItem(b.getCampInfo());
-
-	}
+//	public Data_Entry_Screen(int index) {
+//		initComponents();
+//
+//		Beneficiary_Data b = Home_Menu.benList.get(index);
+//
+//		IDtextfield.setText(b.getID() + "");
+//		badgeNumtextField.setText(b.getBadgeNum());
+//		firstNametextField.setText(b.getFirstName());
+//		lastNametextField.setText(b.getLastName());
+//		otherNametextField.setText(b.getOtherName());
+//		sexcomboBox.setSelectedItem(b.getSex());
+//		dobtextField.setText(b.getDob().toString());
+//		address1textArea.setText(b.getAddress().getLine1());
+//		address2textArea.setText(b.getAddress().getLine2());
+//		citytextField.setText(b.getAddress().getCity());
+//		posttextField.setText(b.getAddress().getPost());
+//		talukatextField.setText(b.getAddress().getTaluka());
+//		districttextField.setText(b.getAddress().getDistrict());
+//		statecomboBox.setSelectedItem(b.getAddress().getState());
+//		pinCodetextField.setText(b.getAddress().getPinCode() + "");
+//		phoneNum1textField.setText(b.getContact().getPhoneNum1() + "");
+//		phoneNum2textField.setText(b.getContact().getPhoneNum2() + "");
+//		emailtextField.setText(b.getContact().getEmail());
+//		occupationcomboBox.setSelectedItem(b.getOccupation());
+//		LOREItextField.setText(b.getHand().getLOREI() + "");
+//		lostHandcomboBox.setSelectedItem(b.getHand().getLostHand());
+//		yearOfLosstextField.setText(b.getHand().getLossYear() + "");
+//		causeOfLosscomboBox.setSelectedItem(b.getHand().getCauseOfLoss());
+//		othertextField.setText(b.getHand().getOther());
+//		infocomboBox.setSelectedItem(b.getCampInfo());
+//
+//	}
 
 	public boolean validName(String name) {
 		boolean valid = true;
@@ -193,25 +193,90 @@ public class Data_Entry_Screen extends JFrame {
 		phoneNum2 = phoneNum2textField.getText();
 		email = emailtextField.getText();
 		occupation = occupationcomboBox.getSelectedItem().toString();
-		LOREI = Double.parseDouble((LOREItextField.getText()));
+		
+
 		lostHand = lostHandcomboBox.getSelectedItem().toString();
-		lossYear = Integer.parseInt(yearOfLosstextField.getText());
 		causeOfLoss = causeOfLosscomboBox.getSelectedItem().toString();
 		other = othertextField.getText();
 		campInfo = infocomboBox.getSelectedItem().toString();
 
 		// validation
-		if (badgeNum.equals(" ") && validName(firstName) && validName(lastName) && validName(otherName) && validDate(dob)
-				&& line1.equals(" ") && validName(city) && city.equals(" ") && validName(post) && validName(taluka)
-				&& validName(district) && district.equals(" ") && (phoneNum1.length() != 11) && phoneNum1.equals(" ")
-				&& (phoneNum2.length() != 11) && !email.contains("@") && !email.contains(".")
-				&& containNumbersOnly(LOREItextField.getText())
-				&& onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length()))) {
+//		if (badgeNum.equals(" ") && validName(firstName) && validName(lastName) && validName(otherName)
+//				&& validDate(dob) && line1.equals(" ") && validName(city) && city.equals(" ") && validName(post)
+//				&& validName(taluka) && validName(district) && district.equals(" ") && (phoneNum1.length() != 11)
+//				&& phoneNum1.equals(" ") && (phoneNum2.length() != 11) && !email.contains("@") && !email.contains(".")
+//				&& containNumbersOnly(LOREItextField.getText())
+//				&& onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length()))) {
+//			valid = false;
+//		}
+		
+		if (badgeNum.equals(" ")) {
 			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Badge Number");
+		} else if (validName(firstName)) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check First Name");
+		} else if (validName(lastName)) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Last Name");
+		} else if (validName(otherName)) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Father's Number");
+		} else if (validDate(dob)) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Date of Birth");
+		} else if (line1.equals(" ")) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Address Line 1");
+		} else if (validName(city)) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check City");
+		} else if (city.equals(" ")) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check City");
+		} else if (validName(post)) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Post");
+		} else if (validName(taluka)) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Taluka");
+		} else if (validName(district)) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check District");
+		} else if (district.equals(" ")) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check District");
+		} else if (phoneNum1.length() != 11) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 1");
+		} else if (phoneNum2.length() != 11) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 2");
+		} else if (phoneNum1.equals(" ")) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 1");
+		} else if (!(email.contains("@")) && !(email.contains("."))) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Email Address");
+		} else if (containNumbersOnly(LOREItextField.getText())) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Length of Resibual Elbow");
+		} else if (onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length()))) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please check Loss Year");
 		}
+		
+		try {			
+			LOREI = Double.parseDouble((LOREItextField.getText()));
+			lossYear = Integer.parseInt(yearOfLosstextField.getText());
 
-		// adding all the variables to their respective constructors and then adding the
-		// one beneficiary to the benList Array List
+		} catch(Exception e) {
+			JOptionPane.showMessageDialog(rootPane, "Please enter Length of Residual Elbow and Loss Year");
+		}
+//		 checking if valid remains true, although this is not required as the if statements 
+//		 above will make sure that does not happen
+//		 adding all the variables to their respective constructors and then adding the
+//		 one beneficiary to the benList Array List
 		if (valid) {
 
 			b.personalDetails(ID, badgeNum, firstName, lastName, otherName, sex, occupation, campInfo);
@@ -224,20 +289,23 @@ public class Data_Entry_Screen extends JFrame {
 			Home_Menu.addData();
 
 			String[] buttons = { "Add more", "Back to Menu" };
+			int rc = JOptionPane.showOptionDialog(rootPane, "Data Added", "Success", JOptionPane.INFORMATION_MESSAGE, 0, null, buttons, buttons[1]);
+			if(rc == 0) {
+//				reset();
+				this.dispose();
+				Data_Entry_Screen a = new Data_Entry_Screen();
+				a.setVisible(true);
+			} else if (rc == 1) {
+				this.dispose();
+				Home_Menu.benData();
 
-			JOptionPane.showMessageDialog(rootPane, "Data Added");
-			reset();
-
-			Home_Menu.benData();
-
-		} else {
-			JOptionPane.showMessageDialog(rootPane, "invalid data");
+			}
 		}
 
 	}
 
 	private void reset() {
-		IDtextfield.setText(" ");
+		IDtextfield.setText((b.getID() + 1) + "");
 		badgeNumtextField.setText(" ");
 		firstNametextField.setText(" ");
 		lastNametextField.setText(" ");
@@ -266,7 +334,7 @@ public class Data_Entry_Screen extends JFrame {
 	}
 
 	private void dobtextFieldActionPerformed() {
-		dobtextField.setText(" ");
+		dobtextField.setText("");
 	}
 
 	// gui code

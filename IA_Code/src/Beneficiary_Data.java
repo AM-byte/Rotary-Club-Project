@@ -1,7 +1,7 @@
 
 public class Beneficiary_Data {
 	// declaring all required variables
-	private static int x=6008;  // auto-id increment
+	private static int x = 6008; // auto-id increment
 	private int ID;
 	private String badgeNum, firstName, lastName, otherName, occupation, campInfo;
 	private String sex;
@@ -18,7 +18,7 @@ public class Beneficiary_Data {
 		hand = new Hand();
 		x++;
 	}
-	
+
 	public void personalDetails(int id, String bn, String fn, String ln, String on, String s, String o, String ci) {
 		this.ID = id;
 		this.badgeNum = bn;
@@ -28,7 +28,7 @@ public class Beneficiary_Data {
 		this.sex = s;
 		this.occupation = o;
 		this.campInfo = ci;
-		
+
 	}
 
 	public void address(String l1, String l2, String c, String p, String t, String d, String s, String pc) {
@@ -40,23 +40,23 @@ public class Beneficiary_Data {
 		address.setDistrict(d);
 		address.setState(s);
 		address.setPinCode(pc);
-		
+
 	}
-	
+
 	public void contact(String p1, String p2, String email) {
 		contact.setPhoneNum1(p1);
 		contact.setPhoneNum2(p2);
 		contact.setEmail(email);
-		
+
 	}
-	
-	public void date(int d, int m, int y)  {
+
+	public void date(int d, int m, int y) {
 		dob.setDay(d);
 		dob.setMonth(m);
 		dob.setYear(y);
-		
+
 	}
-	
+
 	public void checkUp(double l, String lh, String col, String other, int ly) {
 		hand.setLOREI(l);
 		hand.setLostHand(lh);
@@ -71,9 +71,9 @@ public class Beneficiary_Data {
 	}
 
 	public void setID(int iD) {
-		
-		if(iD>1000) {
-		ID = iD;
+
+		if (iD > 1000) {
+			ID = iD;
 		}
 	}
 
@@ -164,7 +164,5 @@ public class Beneficiary_Data {
 	public void setHand(Hand hand) {
 		this.hand = hand;
 	}
-	
-	
 
 }

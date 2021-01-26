@@ -21,22 +21,6 @@ public class Chart_Screen extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Chart_Screen frame = new Chart_Screen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public Chart_Screen() {
@@ -46,7 +30,7 @@ public class Chart_Screen extends JFrame {
 
 		ChartPanel panel = new ChartPanel(chart);
 		setContentPane(panel);
-		
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {

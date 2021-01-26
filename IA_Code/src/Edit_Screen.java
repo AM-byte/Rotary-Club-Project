@@ -82,14 +82,21 @@ public class Edit_Screen extends JFrame {
 	private JButton btnSavePrint;
 	Beneficiary_Data b;
 	private JTextField agetextField;
-	
+
 	public Edit_Screen(int index) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				Search_Screen s = new Search_Screen();
+				s.setVisible(true);
+			}
+		});
 		initComponents();
 		this.setAlwaysOnTop(true);
-		
+
 		b = Home_Menu.benList.get(index);
-		this.index=index;
-		
+		this.index = index;
+
 		IDtextfield.setText(b.getID() + "");
 		badgeNumtextField.setText(b.getBadgeNum());
 		firstNametextField.setText(b.getFirstName());
@@ -117,7 +124,6 @@ public class Edit_Screen extends JFrame {
 		othertextField.setText(b.getHand().getOther());
 		infocomboBox.setSelectedItem(b.getCampInfo());
 		ID = b.getID();
-		
 
 	}
 
@@ -166,17 +172,13 @@ public class Edit_Screen extends JFrame {
 		return result;
 	}
 
-
 	private void btnSavePrintActionPerformed(int id) { // actions performed after the Save n Print button is pressed
 
 		// getting all the variables from the form
 		boolean valid = true;
-		
-		int index;
-		
-		b =  Home_Menu.benList.get(this.index);
 
-//		b =  Search_Screen.sortedBenList.get(index);
+		b = Home_Menu.benList.get(this.index);
+
 		ID = b.getID();
 		badgeNum = badgeNumtextField.getText();
 		firstName = firstNametextField.getText();
@@ -204,10 +206,10 @@ public class Edit_Screen extends JFrame {
 		campInfo = infocomboBox.getSelectedItem().toString();
 
 		// validation
-		if (badgeNum.equals(" ") && validName(firstName) && validName(lastName) && validName(otherName) && validDate(dob)
-				&& line1.equals(" ") && validName(city) && city.equals(" ") && validName(post) && validName(taluka)
-				&& validName(district) && district.equals(" ") && (phoneNum1.length() != 11) && phoneNum1.equals(" ")
-				&& (phoneNum2.length() != 11) && !email.contains("@") && !email.contains(".")
+		if (badgeNum.equals(" ") && validName(firstName) && validName(lastName) && validName(otherName)
+				&& validDate(dob) && line1.equals(" ") && validName(city) && city.equals(" ") && validName(post)
+				&& validName(taluka) && validName(district) && district.equals(" ") && (phoneNum1.length() != 11)
+				&& phoneNum1.equals(" ") && (phoneNum2.length() != 11) && !email.contains("@") && !email.contains(".")
 				&& containNumbersOnly(LOREItextField.getText())
 				&& onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length()))) {
 			valid = false;
@@ -222,28 +224,25 @@ public class Edit_Screen extends JFrame {
 			b.checkUp(LOREI, lostHand, causeOfLoss, other, lossYear);
 			b.date(Integer.parseInt(dob.split("/")[0]), Integer.parseInt(dob.split("/")[1]),
 					Integer.parseInt(dob.split("/")[2]));
-			
-			
-			
-			for(int i = 0; i < Home_Menu.benList.size(); i++) {
-				if (b.getID() ==Home_Menu.benList.get(i).getID()) {
+
+			for (int i = 0; i < Home_Menu.benList.size(); i++) {
+				if (b.getID() == Home_Menu.benList.get(i).getID()) {
 					Home_Menu.benList.remove(i);
 					Home_Menu.benList.add(b);
 				}
 			}
-			for(int i = 0; i<Home_Menu.benList.size();i++) {
-				System.out.println(Home_Menu.benList);
 
-			}
-			
 			Home_Menu.addData();
 			this.dispose();
-			
+			Search_Screen s = new Search_Screen();
+			s.setVisible(true);
+
 		} else {
 			JOptionPane.showMessageDialog(rootPane, "Invalid Data");
 		}
 
 	}
+
 	private void dobtextFieldActionPerformed() {
 		dobtextField.setText(" ");
 	}

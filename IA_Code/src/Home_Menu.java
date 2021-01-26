@@ -9,7 +9,7 @@ public class Home_Menu {
 
 	static ArrayList<Beneficiary_Data> benList = new ArrayList<Beneficiary_Data>();
 	static ArrayList<Beneficiary_Data> sortedBenList = new ArrayList<Beneficiary_Data>();
-	static Scanner in ;
+	static Scanner in;
 
 	public static void main(String[] args) {
 
@@ -19,8 +19,6 @@ public class Home_Menu {
 	}
 
 	public static void homeMenu() {
-		
-		
 
 		String option;
 		in = new Scanner(System.in);
@@ -64,21 +62,19 @@ public class Home_Menu {
 	public static void benData() { // method is called if user selects the beneficiary data option in the home menu
 
 		String option;
-		
 
 		System.out.println("Following are the options:"); // asking user to choose their option
 		System.out.println("1. Add new beneficiary data");
 		System.out.println("2. Edit beneficiary data");
 		System.out.println("3. Back to home menu");
 		System.out.println("4. Exit Application");
-		System.out.println("Please enter number"); 
+		System.out.println("Please enter number");
 		in = new Scanner(System.in);
 
 		do {
-			
-			
+
 			option = in.next();
-			
+
 			switch (option) { // switch case to complement the user's selection
 
 			case "1":
@@ -108,7 +104,7 @@ public class Home_Menu {
 				System.out.println("You have entered an invalid value. Accepted values are 1, 2, 3 or 4");
 				benData();
 			}
-			
+
 		} while (!(option.equals("1")) && !(option.equals("2")) && !(option.equals("3")) && !(option.equals("4")));
 	}
 
