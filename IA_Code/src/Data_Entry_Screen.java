@@ -1,8 +1,3 @@
-
-import java.awt.BorderLayout;
-import java.awt.Dialog.ModalityType;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -73,54 +68,11 @@ public class Data_Entry_Screen extends JFrame {
 	 * Create the frame.
 	 */
 	public Data_Entry_Screen() {
-		setResizable(false);
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				Home_Menu.benData();
-			}
-		});
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
 		initComponents();
-		this.setAlwaysOnTop(true);
 
 		b = new Beneficiary_Data();
 		IDtextfield.setText(b.getID() + "");
 	}
-
-//	public Data_Entry_Screen(int index) {
-//		initComponents();
-//
-//		Beneficiary_Data b = Home_Menu.benList.get(index);
-//
-//		IDtextfield.setText(b.getID() + "");
-//		badgeNumtextField.setText(b.getBadgeNum());
-//		firstNametextField.setText(b.getFirstName());
-//		lastNametextField.setText(b.getLastName());
-//		otherNametextField.setText(b.getOtherName());
-//		sexcomboBox.setSelectedItem(b.getSex());
-//		dobtextField.setText(b.getDob().toString());
-//		address1textArea.setText(b.getAddress().getLine1());
-//		address2textArea.setText(b.getAddress().getLine2());
-//		citytextField.setText(b.getAddress().getCity());
-//		posttextField.setText(b.getAddress().getPost());
-//		talukatextField.setText(b.getAddress().getTaluka());
-//		districttextField.setText(b.getAddress().getDistrict());
-//		statecomboBox.setSelectedItem(b.getAddress().getState());
-//		pinCodetextField.setText(b.getAddress().getPinCode() + "");
-//		phoneNum1textField.setText(b.getContact().getPhoneNum1() + "");
-//		phoneNum2textField.setText(b.getContact().getPhoneNum2() + "");
-//		emailtextField.setText(b.getContact().getEmail());
-//		occupationcomboBox.setSelectedItem(b.getOccupation());
-//		LOREItextField.setText(b.getHand().getLOREI() + "");
-//		lostHandcomboBox.setSelectedItem(b.getHand().getLostHand());
-//		yearOfLosstextField.setText(b.getHand().getLossYear() + "");
-//		causeOfLosscomboBox.setSelectedItem(b.getHand().getCauseOfLoss());
-//		othertextField.setText(b.getHand().getOther());
-//		infocomboBox.setSelectedItem(b.getCampInfo());
-//
-//	}
 
 	public boolean validName(String name) {
 		boolean valid = true;
@@ -130,7 +82,7 @@ public class Data_Entry_Screen extends JFrame {
 				valid = false;
 			}
 		}
-		return valid;
+		return true;
 	}
 
 	public boolean validDate(String date) {
@@ -156,17 +108,29 @@ public class Data_Entry_Screen extends JFrame {
 	public boolean containNumbersOnly(String source) {
 
 		source = source.trim();
-		boolean result = false;
-		Pattern pattern = Pattern.compile("[0-9]+.[0-9]+"); // correct pattern for both float and integer
+		boolean result;
+		Pattern pattern;
+//	        Pattern pattern = Pattern.compile("[0-9]+.[0-9]+"); // correct pattern for both float and integer
 		pattern = Pattern.compile("\\d+.\\d"); // correct pattern for both float and integer
 
 		result = pattern.matcher(source).matches();
-		if (result) {
-			System.out.println("\"" + source + "\"" + " is a number");
-		} else {
-			System.out.println("\"" + source + "\"" + " is a String");
-		}
+//		if (result) {
+//			System.out.println("\"" + source + "\"" + " is a number");
+//		} else {
+//			System.out.println("\"" + source + "\"" + " is a String");
+//		}
 		return result;
+	}
+
+	private void causeOfLossActionPerformed() {
+		if (causeOfLosscomboBox != null) {
+			if (causeOfLosscomboBox.getSelectedItem().toString().equalsIgnoreCase("Others") == false) {
+				othertextField.setText("N/A");
+			} else {
+				othertextField.setText(" ");
+			}
+
+		}
 	}
 
 	private void btnSavePrintActionPerformed() { // actions performed after the Save n Print button is pressed
@@ -193,85 +157,92 @@ public class Data_Entry_Screen extends JFrame {
 		phoneNum2 = phoneNum2textField.getText();
 		email = emailtextField.getText();
 		occupation = occupationcomboBox.getSelectedItem().toString();
-		
-
 		lostHand = lostHandcomboBox.getSelectedItem().toString();
 		causeOfLoss = causeOfLosscomboBox.getSelectedItem().toString();
 		other = othertextField.getText();
 		campInfo = infocomboBox.getSelectedItem().toString();
 
-		// validation
-//		if (badgeNum.equals(" ") && validName(firstName) && validName(lastName) && validName(otherName)
-//				&& validDate(dob) && line1.equals(" ") && validName(city) && city.equals(" ") && validName(post)
-//				&& validName(taluka) && validName(district) && district.equals(" ") && (phoneNum1.length() != 11)
-//				&& phoneNum1.equals(" ") && (phoneNum2.length() != 11) && !email.contains("@") && !email.contains(".")
-//				&& containNumbersOnly(LOREItextField.getText())
-//				&& onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length()))) {
-//			valid = false;
-//		}
-		
-		if (badgeNum.equals(" ")) {
+		String lor = "";
+
+		if (badgeNum.equals("") || firstName.equals("") || lastName.equals("") || otherName.equals("")
+				|| line1.equals("") || city.equals("") || district.equals("") || phoneNum1.equals("")
+				|| pinCode.equals("") || sex.equals("") || state.equals("") || occupation.equals("")
+				|| causeOfLoss.equals("") || campInfo.equals("")) {
 			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Badge Number");
-		} else if (validName(firstName)) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check First Name");
-		} else if (validName(lastName)) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Last Name");
-		} else if (validName(otherName)) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Father's Number");
-		} else if (validDate(dob)) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Date of Birth");
-		} else if (line1.equals(" ")) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Address Line 1");
-		} else if (validName(city)) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check City");
-		} else if (city.equals(" ")) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check City");
-		} else if (validName(post)) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Post");
-		} else if (validName(taluka)) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Taluka");
-		} else if (validName(district)) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check District");
-		} else if (district.equals(" ")) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check District");
-		} else if (phoneNum1.length() != 11) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 1");
-		} else if (phoneNum2.length() != 11) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 2");
-		} else if (phoneNum1.equals(" ")) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 1");
-		} else if (!(email.contains("@")) && !(email.contains("."))) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Email Address");
-		} else if (containNumbersOnly(LOREItextField.getText())) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Length of Resibual Elbow");
-		} else if (onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length()))) {
-			valid = false;
-			JOptionPane.showMessageDialog(rootPane, "Please check Loss Year");
+			JOptionPane.showMessageDialog(rootPane, "Please input the all the mandatory fields");
+		} else {
+
+			try {
+				LOREI = Double.parseDouble((LOREItextField.getText()));
+				lor = LOREI + "";
+				lossYear = Integer.parseInt(yearOfLosstextField.getText());
+
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(rootPane, "Please input Length of Residual Elbow and Loss Year");
+			}
+
+			if (!(validName(firstName))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check First Name");
+			} else if (!(validName(lastName))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Last Name");
+			} else if (!(validName(otherName))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Father's Number");
+			} else if (!(validDate(dob))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Date of Birth");
+			} else if (!(validName(city))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check City");
+			} else if (!(validName(post))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Post");
+			} else if (!(validName(taluka))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Taluka");
+			} else if (!(validName(district))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check District");
+			} else if (phoneNum1.length() != 11) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 1");
+			} else if ((phoneNum2.length() != 11 && phoneNum2.length() != 0) || (phoneNum2.equals(" "))) { 
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 2");
+			} else if (!email.equals("")) {
+				if (!(email.contains("@")) && !(email.contains("."))) {
+					valid = false;
+					JOptionPane.showMessageDialog(rootPane, "Please check Email Address");
+				}
+			} else if (!containNumbersOnly(lor)) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Length of Resibual Elbow");
+			} else if (!onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length())) ||
+					(new Date().getYear() < lossYear)) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Loss Year");
+			} else if (LOREI >= 15) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Length of Residual Elbow");
+			}
 		}
 		
-		try {			
-			LOREI = Double.parseDouble((LOREItextField.getText()));
-			lossYear = Integer.parseInt(yearOfLosstextField.getText());
+		if(valid) {
+			Date d;
+			try {
+				d = new Date(dob);
+				if (d.getYear() >= lossYear) {
+					valid = false;
+					JOptionPane.showMessageDialog(rootPane, "Please check Loss Year");
 
-		} catch(Exception e) {
-			JOptionPane.showMessageDialog(rootPane, "Please enter Length of Residual Elbow and Loss Year");
+				}
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(rootPane, "Please check date of birth");
+
+			}
+			
 		}
 //		 checking if valid remains true, although this is not required as the if statements 
 //		 above will make sure that does not happen
@@ -289,12 +260,12 @@ public class Data_Entry_Screen extends JFrame {
 			Home_Menu.addData();
 
 			String[] buttons = { "Add more", "Back to Menu" };
-			int rc = JOptionPane.showOptionDialog(rootPane, "Data Added", "Success", JOptionPane.INFORMATION_MESSAGE, 0, null, buttons, buttons[1]);
-			if(rc == 0) {
-//				reset();
-				this.dispose();
+			int rc = JOptionPane.showOptionDialog(rootPane, "Data Added", "Success", JOptionPane.INFORMATION_MESSAGE, 0,
+					null, buttons, buttons[1]);
+			if (rc == 0) {
 				Data_Entry_Screen a = new Data_Entry_Screen();
 				a.setVisible(true);
+				this.dispose();
 			} else if (rc == 1) {
 				this.dispose();
 				Home_Menu.benData();
@@ -304,40 +275,11 @@ public class Data_Entry_Screen extends JFrame {
 
 	}
 
-	private void reset() {
-		IDtextfield.setText((b.getID() + 1) + "");
-		badgeNumtextField.setText(" ");
-		firstNametextField.setText(" ");
-		lastNametextField.setText(" ");
-		otherNametextField.setText(" ");
-		sexcomboBox.setSelectedItem(" ");
-		dobtextField.setText(" ");
-		address1textArea.setText(" ");
-		address2textArea.setText(" ");
-		citytextField.setText(" ");
-		posttextField.setText(" ");
-		talukatextField.setText(" ");
-		districttextField.setText(" ");
-		statecomboBox.setSelectedItem(" ");
-		pinCodetextField.setText(" ");
-		phoneNum1textField.setText(" ");
-		phoneNum2textField.setText(" ");
-		emailtextField.setText(" ");
-		occupationcomboBox.setSelectedItem(" ");
-		LOREItextField.setText(" ");
-		lostHandcomboBox.setSelectedItem(" ");
-		yearOfLosstextField.setText(" ");
-		causeOfLosscomboBox.setSelectedItem(" ");
-		othertextField.setText(" ");
-		infocomboBox.setSelectedItem(" ");
-
-	}
-
 	private void dobtextFieldActionPerformed() {
 		dobtextField.setText("");
 	}
 
-	// gui code
+	// gui constructor
 	private void initComponents() {
 		setBounds(100, 100, 650, 530);
 		contentPane = new JPanel();
@@ -411,7 +353,7 @@ public class Data_Entry_Screen extends JFrame {
 
 		sexcomboBox = new JComboBox();
 		sexcomboBox.setBounds(125, 186, 130, 27);
-		sexcomboBox.setModel(new DefaultComboBoxModel(new String[] { " ", "Male", "Female", "Other" }));
+		sexcomboBox.setModel(new DefaultComboBoxModel(new String[] { "", "Male", "Female", "Other" }));
 
 		JLabel lblNewLabel_10 = new JLabel("Address Line 2:");
 		lblNewLabel_10.setBounds(6, 295, 107, 16);
@@ -515,6 +457,11 @@ public class Data_Entry_Screen extends JFrame {
 		yearOfLosstextField.setColumns(10);
 
 		causeOfLosscomboBox = new JComboBox();
+		causeOfLosscomboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				causeOfLossActionPerformed();
+			}
+		});
 		causeOfLosscomboBox.setBounds(489, 362, 130, 27);
 		causeOfLosscomboBox.setModel(new DefaultComboBoxModel(new String[] { " ", "Accident - Agricultural",
 				"Accident - Electrocution", "Accident - Industrial", "Accident - Vehicular", "Birth Defect",
@@ -606,6 +553,17 @@ public class Data_Entry_Screen extends JFrame {
 		contentPane.add(infocomboBox);
 		contentPane.add(lblNewLabel_25);
 		contentPane.add(btnSavePrint);
+
+		setResizable(false);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				Home_Menu.benData();
+			}
+		});
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setAlwaysOnTop(true);
+		this.repaint(20);
 
 	}
 

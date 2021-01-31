@@ -1,14 +1,10 @@
 
 import java.awt.BorderLayout;
-
-import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -18,6 +14,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class Chart_Screen extends JFrame {
 
+	
 	private JPanel contentPane;
 
 	/**
@@ -30,16 +27,6 @@ public class Chart_Screen extends JFrame {
 
 		ChartPanel panel = new ChartPanel(chart);
 		setContentPane(panel);
-
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				Home_Menu.trendAnalysis();
-			}
-		});
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setAlwaysOnTop(true);
-
 	}
 
 	private CategoryDataset createDataset() {
@@ -88,7 +75,15 @@ public class Chart_Screen extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		setResizable(false);
-
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setAlwaysOnTop(true);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				Home_Menu.trendAnalysis();
+			}
+		});
+		this.repaint(5);
 	}
 
 }

@@ -19,6 +19,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Search_Screen extends JFrame {
 
@@ -38,13 +40,16 @@ public class Search_Screen extends JFrame {
 			binarySearch(sortedBenList, ID);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			JOptionPane.showMessageDialog(rootPane, e);
 		}
 	}
 
+	public void exitbtnNewButtonactionPerformed() {
+		this.dispose();
+		Home_Menu.benData();
+		}
+	
 	public void binarySearch(ArrayList<Beneficiary_Data> benList, int ID) {
-
 
 		int index = -1;
 		int low = 0;
@@ -96,7 +101,6 @@ public class Search_Screen extends JFrame {
 		arr.set(high, temp);
 
 		return i + 1;
-
 	}
 
 	public void quickSort(ArrayList<Beneficiary_Data> arr, int low, int high) { // sorting the benList array
@@ -119,24 +123,13 @@ public class Search_Screen extends JFrame {
 	}
 
 	public Search_Screen() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				setVisible(false);
-				Home_Menu.benData();
-
-			}
-		});
-		setResizable(false);
-		
+	
 		initComponents();
 		quickSort(Home_Menu.benList, 0, Home_Menu.benList.size() - 1);
-		this.setAlwaysOnTop(true);
 
 	}
 
 	private void initComponents() {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 300, 175);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -152,6 +145,14 @@ public class Search_Screen extends JFrame {
 		contentPane.add(lblNewLabel_1);
 
 		IDtextField = new JTextField();
+		IDtextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+					searchbtnActionPerformed();
+				}
+			}
+		});
 		IDtextField.setBounds(111, 56, 130, 26);
 		contentPane.add(IDtextField);
 		IDtextField.setColumns(10);
@@ -163,9 +164,24 @@ public class Search_Screen extends JFrame {
 				searchbtnActionPerformed();
 			}
 		});
-		searchbtn.setBounds(85, 118, 117, 29);
+		searchbtn.setBounds(19, 118, 117, 29);
 		contentPane.add(searchbtn);
+		
+		JButton exitbtnNewButton = new JButton("Exit Search");
+		exitbtnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				exitbtnNewButtonactionPerformed();
+			}
+		});
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		exitbtnNewButton.setBounds(159, 118, 117, 29);
+		contentPane.add(exitbtnNewButton);
+		
+		this.setAlwaysOnTop(true);
+		setResizable(false);
+		this.setAlwaysOnTop(true);
+		this.repaint(20);
 
 	}
-
 }

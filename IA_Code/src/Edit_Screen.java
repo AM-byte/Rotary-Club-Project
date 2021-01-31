@@ -84,15 +84,8 @@ public class Edit_Screen extends JFrame {
 	private JTextField agetextField;
 
 	public Edit_Screen(int index) {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				Search_Screen s = new Search_Screen();
-				s.setVisible(true);
-			}
-		});
+		
 		initComponents();
-		this.setAlwaysOnTop(true);
 
 		b = Home_Menu.benList.get(index);
 		this.index = index;
@@ -205,16 +198,90 @@ public class Edit_Screen extends JFrame {
 		other = othertextField.getText();
 		campInfo = infocomboBox.getSelectedItem().toString();
 
-		// validation
-		if (badgeNum.equals(" ") && validName(firstName) && validName(lastName) && validName(otherName)
-				&& validDate(dob) && line1.equals(" ") && validName(city) && city.equals(" ") && validName(post)
-				&& validName(taluka) && validName(district) && district.equals(" ") && (phoneNum1.length() != 11)
-				&& phoneNum1.equals(" ") && (phoneNum2.length() != 11) && !email.contains("@") && !email.contains(".")
-				&& containNumbersOnly(LOREItextField.getText())
-				&& onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length()))) {
-			valid = false;
-		}
 
+		String lor = "";
+
+		if (badgeNum.equals("") || firstName.equals("") || lastName.equals("") || otherName.equals("")
+				|| line1.equals("") || city.equals("") || district.equals("") || phoneNum1.equals("")
+				|| pinCode.equals("") || sex.equals("") || state.equals("") || occupation.equals("")
+				|| causeOfLoss.equals("") || campInfo.equals("")) {
+			valid = false;
+			JOptionPane.showMessageDialog(rootPane, "Please input the all the mandatory fields");
+		} else {
+
+			try {
+				LOREI = Double.parseDouble((LOREItextField.getText()));
+				lor = LOREI + "";
+				lossYear = Integer.parseInt(yearOfLosstextField.getText());
+
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(rootPane, "Please input Length of Residual Elbow and Loss Year");
+			}
+
+			if (!(validName(firstName))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check First Name");
+			} else if (!(validName(lastName))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Last Name");
+			} else if (!(validName(otherName))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Father's Number");
+			} else if (!(validDate(dob))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Date of Birth");
+			} else if (!(validName(city))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check City");
+			} else if (!(validName(post))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Post");
+			} else if (!(validName(taluka))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Taluka");
+			} else if (!(validName(district))) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check District");
+			} else if (phoneNum1.length() != 11) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 1");
+			} else if ((phoneNum2.length() != 11 && phoneNum2.length() != 0) || (phoneNum2.equals(" "))) { 
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 2");
+			} else if (!email.equals("")) {
+				if (!(email.contains("@")) && !(email.contains("."))) {
+					valid = false;
+					JOptionPane.showMessageDialog(rootPane, "Please check Email Address");
+				}
+			} else if (!containNumbersOnly(lor)) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Length of Resibual Elbow");
+			} else if (!onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length())) ||
+					(new Date().getYear() < lossYear)) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Loss Year");
+			} else if (LOREI >= 15) {
+				valid = false;
+				JOptionPane.showMessageDialog(rootPane, "Please check Length of Residual Elbow");
+			}
+		}
+		
+		if(valid) {
+			Date d;
+			try {
+				d = new Date(dob);
+				if (d.getYear() >= lossYear) {
+					valid = false;
+					JOptionPane.showMessageDialog(rootPane, "Please check Loss Year");
+
+				}
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(rootPane, "Please check date of birth");
+
+			}
+			
+		}
+		
 		// adding all the variables to their respective constructors and then adding the
 		// one beneficiary to the benList Array List
 		if (valid) {
@@ -233,16 +300,17 @@ public class Edit_Screen extends JFrame {
 			}
 
 			Home_Menu.addData();
-			this.dispose();
+			JOptionPane.showMessageDialog(rootPane, "Data Saved");
+		
 			Search_Screen s = new Search_Screen();
+			
+			
+			this.dispose();
 			s.setVisible(true);
-
 		} else {
 			JOptionPane.showMessageDialog(rootPane, "Invalid Data");
 		}
-
-	}
-
+		}
 	private void dobtextFieldActionPerformed() {
 		dobtextField.setText(" ");
 	}
@@ -526,6 +594,16 @@ public class Edit_Screen extends JFrame {
 		contentPane.add(infocomboBox);
 		contentPane.add(lblNewLabel_25);
 		contentPane.add(btnSavePrint);
+		setResizable(false);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				Home_Menu.benData();
+			}
+		});
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setAlwaysOnTop(true);
+		this.repaint(5);
 
 	}
 }
