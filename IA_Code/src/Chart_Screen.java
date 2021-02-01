@@ -14,7 +14,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class Chart_Screen extends JFrame {
 
-	
 	private JPanel contentPane;
 
 	/**
@@ -22,7 +21,7 @@ public class Chart_Screen extends JFrame {
 	 */
 	public Chart_Screen() {
 		initComponents();
-		JFreeChart chart = ChartFactory.createBarChart("Most Common Causes of Loss", "Cause of Loss",
+		JFreeChart chart = ChartFactory.createBarChart("Most Common Causes of Loss of Hands", "Cause of Loss",
 				"Number of Beneficiaries", createDataset(), PlotOrientation.VERTICAL, false, false, false);
 
 		ChartPanel panel = new ChartPanel(chart);

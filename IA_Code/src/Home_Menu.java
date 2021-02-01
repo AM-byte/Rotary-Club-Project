@@ -79,14 +79,22 @@ public class Home_Menu {
 
 			case "1":
 				// adding ben data
-				Data_Entry_Screen n = new Data_Entry_Screen();
-				n.setVisible(true);
+				java.awt.EventQueue.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						new Data_Entry_Screen().setVisible(true);
+					}
+				});
 				break;
 
 			case "2":
 				// editing ben data
-				Search_Screen s = new Search_Screen();
-				s.setVisible(true);
+				java.awt.EventQueue.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						new Search_Screen().setVisible(true);
+					}
+				});
 				break;
 
 			case "3":

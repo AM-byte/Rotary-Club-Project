@@ -84,7 +84,7 @@ public class Edit_Screen extends JFrame {
 	private JTextField agetextField;
 
 	public Edit_Screen(int index) {
-		
+
 		initComponents();
 
 		b = Home_Menu.benList.get(index);
@@ -128,7 +128,7 @@ public class Edit_Screen extends JFrame {
 				valid = false;
 			}
 		}
-		return valid;
+		return true;
 	}
 
 	public boolean validDate(String date) {
@@ -152,17 +152,25 @@ public class Edit_Screen extends JFrame {
 	}
 
 	public boolean containNumbersOnly(String source) {
-		boolean result = false;
-		Pattern pattern = Pattern.compile("[0-9]+.[0-9]+"); // correct pattern for both float and integer
+
+		source = source.trim();
+		boolean result;
+		Pattern pattern;
 		pattern = Pattern.compile("\\d+.\\d"); // correct pattern for both float and integer
 
 		result = pattern.matcher(source).matches();
-		if (result) {
-			System.out.println("\"" + source + "\"" + " is a number");
-		} else {
-			System.out.println("\"" + source + "\"" + " is a String");
-		}
 		return result;
+	}
+
+	private void causeOfLossActionPerformed() {
+		if (causeOfLosscomboBox != null) {
+			if (causeOfLosscomboBox.getSelectedItem().toString().equalsIgnoreCase("Others") == false) {
+				othertextField.setText("N/A");
+			} else {
+				othertextField.setText(" ");
+			}
+
+		}
 	}
 
 	private void btnSavePrintActionPerformed(int id) { // actions performed after the Save n Print button is pressed
@@ -191,13 +199,10 @@ public class Edit_Screen extends JFrame {
 		phoneNum2 = phoneNum2textField.getText();
 		email = emailtextField.getText();
 		occupation = occupationcomboBox.getSelectedItem().toString();
-		LOREI = Double.parseDouble((LOREItextField.getText()));
 		lostHand = lostHandcomboBox.getSelectedItem().toString();
-		lossYear = Integer.parseInt(yearOfLosstextField.getText());
 		causeOfLoss = causeOfLosscomboBox.getSelectedItem().toString();
 		other = othertextField.getText();
 		campInfo = infocomboBox.getSelectedItem().toString();
-
 
 		String lor = "";
 
@@ -245,7 +250,7 @@ public class Edit_Screen extends JFrame {
 			} else if (phoneNum1.length() != 11) {
 				valid = false;
 				JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 1");
-			} else if ((phoneNum2.length() != 11 && phoneNum2.length() != 0) || (phoneNum2.equals(" "))) { 
+			} else if ((phoneNum2.length() != 11 && phoneNum2.length() != 0) || (phoneNum2.equals(" "))) {
 				valid = false;
 				JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 2");
 			} else if (!email.equals("")) {
@@ -256,8 +261,8 @@ public class Edit_Screen extends JFrame {
 			} else if (!containNumbersOnly(lor)) {
 				valid = false;
 				JOptionPane.showMessageDialog(rootPane, "Please check Length of Resibual Elbow");
-			} else if (!onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length())) ||
-					(new Date().getYear() < lossYear)) {
+			} else if (!onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length()))
+					|| (new Date().getYear() < lossYear)) {
 				valid = false;
 				JOptionPane.showMessageDialog(rootPane, "Please check Loss Year");
 			} else if (LOREI >= 15) {
@@ -265,8 +270,8 @@ public class Edit_Screen extends JFrame {
 				JOptionPane.showMessageDialog(rootPane, "Please check Length of Residual Elbow");
 			}
 		}
-		
-		if(valid) {
+
+		if (valid) {
 			Date d;
 			try {
 				d = new Date(dob);
@@ -279,15 +284,15 @@ public class Edit_Screen extends JFrame {
 				JOptionPane.showMessageDialog(rootPane, "Please check date of birth");
 
 			}
-			
+
 		}
-		
+
 		// adding all the variables to their respective constructors and then adding the
 		// one beneficiary to the benList Array List
 		if (valid) {
 
 			b.personalDetails(ID, badgeNum, firstName, lastName, otherName, sex, occupation, campInfo);
-			b.address(line1, line2, city, post, taluka, district, state, pinCode); // error
+			b.address(line1, line2, city, post, taluka, district, state, pinCode);
 			b.checkUp(LOREI, lostHand, causeOfLoss, other, lossYear);
 			b.date(Integer.parseInt(dob.split("/")[0]), Integer.parseInt(dob.split("/")[1]),
 					Integer.parseInt(dob.split("/")[2]));
@@ -301,16 +306,13 @@ public class Edit_Screen extends JFrame {
 
 			Home_Menu.addData();
 			JOptionPane.showMessageDialog(rootPane, "Data Saved");
-		
-			Search_Screen s = new Search_Screen();
-			
-			
+			this.setVisible(false);
 			this.dispose();
-			s.setVisible(true);
 		} else {
 			JOptionPane.showMessageDialog(rootPane, "Invalid Data");
 		}
-		}
+	}
+
 	private void dobtextFieldActionPerformed() {
 		dobtextField.setText(" ");
 	}

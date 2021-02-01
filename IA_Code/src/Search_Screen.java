@@ -47,35 +47,35 @@ public class Search_Screen extends JFrame {
 	public void exitbtnNewButtonactionPerformed() {
 		this.dispose();
 		Home_Menu.benData();
-		}
-	
+	}
+
 	public void binarySearch(ArrayList<Beneficiary_Data> benList, int ID) {
 
-		int index = -1;
-		int low = 0;
-		int high = benList.size() - 1;
-		while (low <= high && index == -1) {
-			int mid = (low + high) / 2;
-			if (benList.get(mid).getID() == ID) {
-				index = mid;
-			} else if (benList.get(mid).getID() > ID) {
-				high = mid - 1;
-			} else {
-				low = mid + 1;
-			}
-		}
+        int index = -1;
+        int low = 0;
+        int high = benList.size() - 1;
+        while (low <= high && index == -1) {
+            int mid = (low + high) / 2;
+            if (benList.get(mid).getID() == ID) {
+                index = mid;
+            } else if (benList.get(mid).getID() > ID) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
 
-		if (index >= 0) {
-			Edit_Screen s = new Edit_Screen(index);
-			this.setVisible(false);
+        if (index >= 0) {
 
-			s.setVisible(true);
+            this.setVisible(false);
+            Edit_Screen s = new Edit_Screen(index);
+            s.setVisible(true);
 
-		} else {
-			JOptionPane.showMessageDialog(rootPane, "ID not found");
-		}
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "ID not found");
+        }
 
-	}
+    }
 
 	// taking the last element as a pivot, places the pivot element at its correct
 	// position in sorted array places all elements before or after the pivot
@@ -123,7 +123,7 @@ public class Search_Screen extends JFrame {
 	}
 
 	public Search_Screen() {
-	
+
 		initComponents();
 		quickSort(Home_Menu.benList, 0, Home_Menu.benList.size() - 1);
 
@@ -166,7 +166,7 @@ public class Search_Screen extends JFrame {
 		});
 		searchbtn.setBounds(19, 118, 117, 29);
 		contentPane.add(searchbtn);
-		
+
 		JButton exitbtnNewButton = new JButton("Exit Search");
 		exitbtnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -177,7 +177,7 @@ public class Search_Screen extends JFrame {
 
 		exitbtnNewButton.setBounds(159, 118, 117, 29);
 		contentPane.add(exitbtnNewButton);
-		
+
 		this.setAlwaysOnTop(true);
 		setResizable(false);
 		this.setAlwaysOnTop(true);

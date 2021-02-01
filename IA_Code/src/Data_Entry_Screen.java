@@ -1,3 +1,4 @@
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -20,8 +21,6 @@ public class Data_Entry_Screen extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField IDtextfield;
-
-	// Requires addition
 	private int ID = 0;
 	private String badgeNum = " ", firstName = " ", lastName = " ", otherName = " ", occupation = " ", campInfo = " ";
 	private String sex;
@@ -33,7 +32,6 @@ public class Data_Entry_Screen extends JFrame {
 	private double LOREI = 0;
 	private String lostHand = " ", causeOfLoss = " ", other = " ";
 	private int lossYear = 0;
-
 	private JTextField badgeNumtextField;
 	private JTextField firstNametextField;
 	private JTextField lastNametextField;
@@ -50,17 +48,14 @@ public class Data_Entry_Screen extends JFrame {
 	private JTextField yearOfLosstextField;
 	private JTextField othertextField;
 	private JTextField dobtextField;
-
 	private JComboBox sexcomboBox;
 	private JComboBox statecomboBox;
 	private JComboBox occupationcomboBox;
 	private JComboBox lostHandcomboBox;
 	private JComboBox causeOfLosscomboBox;
 	private JComboBox infocomboBox;
-
 	private JTextArea address1textArea;
 	private JTextArea address2textArea;
-
 	private JButton btnSavePrint;
 	Beneficiary_Data b;
 
@@ -110,21 +105,17 @@ public class Data_Entry_Screen extends JFrame {
 		source = source.trim();
 		boolean result;
 		Pattern pattern;
-//	        Pattern pattern = Pattern.compile("[0-9]+.[0-9]+"); // correct pattern for both float and integer
 		pattern = Pattern.compile("\\d+.\\d"); // correct pattern for both float and integer
 
 		result = pattern.matcher(source).matches();
-//		if (result) {
-//			System.out.println("\"" + source + "\"" + " is a number");
-//		} else {
-//			System.out.println("\"" + source + "\"" + " is a String");
-//		}
 		return result;
 	}
 
 	private void causeOfLossActionPerformed() {
+		othertextField.setEditable(true);
 		if (causeOfLosscomboBox != null) {
 			if (causeOfLosscomboBox.getSelectedItem().toString().equalsIgnoreCase("Others") == false) {
+				othertextField.setEditable(false);
 				othertextField.setText("N/A");
 			} else {
 				othertextField.setText(" ");
@@ -208,7 +199,7 @@ public class Data_Entry_Screen extends JFrame {
 			} else if (phoneNum1.length() != 11) {
 				valid = false;
 				JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 1");
-			} else if ((phoneNum2.length() != 11 && phoneNum2.length() != 0) || (phoneNum2.equals(" "))) { 
+			} else if ((phoneNum2.length() != 11 && phoneNum2.length() != 0) || (phoneNum2.equals(" "))) {
 				valid = false;
 				JOptionPane.showMessageDialog(rootPane, "Please check Telephone Number 2");
 			} else if (!email.equals("")) {
@@ -219,8 +210,8 @@ public class Data_Entry_Screen extends JFrame {
 			} else if (!containNumbersOnly(lor)) {
 				valid = false;
 				JOptionPane.showMessageDialog(rootPane, "Please check Length of Resibual Elbow");
-			} else if (!onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length())) ||
-					(new Date().getYear() < lossYear)) {
+			} else if (!onlyDigits(yearOfLosstextField.getText(), (yearOfLosstextField.getText().length()))
+					|| (new Date().getYear() < lossYear)) {
 				valid = false;
 				JOptionPane.showMessageDialog(rootPane, "Please check Loss Year");
 			} else if (LOREI >= 15) {
@@ -228,8 +219,8 @@ public class Data_Entry_Screen extends JFrame {
 				JOptionPane.showMessageDialog(rootPane, "Please check Length of Residual Elbow");
 			}
 		}
-		
-		if(valid) {
+
+		if (valid) {
 			Date d;
 			try {
 				d = new Date(dob);
@@ -242,7 +233,7 @@ public class Data_Entry_Screen extends JFrame {
 				JOptionPane.showMessageDialog(rootPane, "Please check date of birth");
 
 			}
-			
+
 		}
 //		 checking if valid remains true, although this is not required as the if statements 
 //		 above will make sure that does not happen
@@ -259,19 +250,45 @@ public class Data_Entry_Screen extends JFrame {
 
 			Home_Menu.addData();
 
-			String[] buttons = { "Add more", "Back to Menu" };
+			String[] buttons = { "Add more", "OK" };
 			int rc = JOptionPane.showOptionDialog(rootPane, "Data Added", "Success", JOptionPane.INFORMATION_MESSAGE, 0,
 					null, buttons, buttons[1]);
 			if (rc == 0) {
-				Data_Entry_Screen a = new Data_Entry_Screen();
-				a.setVisible(true);
-				this.dispose();
+				reset();
 			} else if (rc == 1) {
 				this.dispose();
-				Home_Menu.benData();
-
 			}
+
 		}
+	}
+
+	private void reset() {
+		b = new Beneficiary_Data();
+		IDtextfield.setText(b.getID() + "");
+		badgeNumtextField.setText("");
+		firstNametextField.setText("");
+		lastNametextField.setText("");
+		otherNametextField.setText("");
+		sexcomboBox.setSelectedIndex(0);
+		dobtextField.setText("dd/mm/yyyy");
+		address1textArea.setText("");
+		address2textArea.setText("");
+		citytextField.setText("");
+		posttextField.setText("");
+		talukatextField.setText("");
+		districttextField.setText("");
+		statecomboBox.setSelectedIndex(0);
+		pinCodetextField.setText("");
+		phoneNum1textField.setText("");
+		phoneNum2textField.setText("");
+		emailtextField.setText("");
+		occupationcomboBox.setSelectedIndex(0);
+		LOREItextField.setText("");
+		lostHandcomboBox.setSelectedIndex(0);
+		yearOfLosstextField.setText("");
+		causeOfLosscomboBox.setSelectedIndex(0);
+		othertextField.setText("");
+		infocomboBox.setSelectedIndex(0);
 
 	}
 
