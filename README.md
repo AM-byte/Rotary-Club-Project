@@ -1,1 +1,3 @@
-Data Management System Developed by Arnav Mahale for the Rotary Club of Downtown Poons
+## Data Management System, The Rotary Club of Downtown Poona
+
+Developed by Arnav Mahale
